@@ -132,7 +132,6 @@ tbody tr td {
 }
 
 .main-info {
-	display: none;
 	justify-content: center;
 	text-align: center;
 	width: 80%;
@@ -260,7 +259,6 @@ tbody tr td {
 .title-all {
 	text-align: center;
 	margin: 10px 0;
-	display: none;
 	color: #f6f4f4;
 	width: auto;
 }
@@ -297,7 +295,6 @@ tbody tr td {
 .title-list-game {
 	text-align: center;
 	margin: 10px 0;
-	display: none;
 	color: #f6f4f4;
 	width: auto;
 }
@@ -533,7 +530,6 @@ tbody tr td {
 }
 
 .container {
-	display: none;
 	max-width: 80%;
 	margin: 20px auto;
 	padding: 20px;
@@ -616,7 +612,6 @@ tbody tr td {
 }
 
 .tooltip {
-	display: none;
 	position: absolute;
 	top: 40px;
 	right: 10px;

@@ -2,12 +2,29 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRef } from 'react';
 
-export function Header() {
+type HeaderProps = {
+	setUsername: (username: string) => void;
+};
+
+export function Header({ setUsername }: HeaderProps) {
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	// Для очистки input и props
+	const handleClear = () => {
+		if (inputRef.current) {
+			inputRef.current.value = '';
+			setUsername('');
+		}
+	};
+
+	// Для отслеживания нажатой клавиши, и только при Enter передаётся в props
 	const handleKeyDown = (evt: React.KeyboardEvent<HTMLInputElement>) => {
 		if (evt.key === 'Enter') {
 			const target = evt.target as HTMLInputElement;
-			console.log(target.value);
+			const username = target.value;
+			setUsername(username);
 		}
 	};
 	return (
@@ -37,10 +54,11 @@ export function Header() {
 						id="username"
 						placeholder="Enter faceit username"
 						autoComplete="off"
+						ref={inputRef} // Привязка компонента через Ref
 						onKeyDown={handleKeyDown}
 					/>
 					<button id="fetchStats"></button>
-					<button id="clearStats">
+					<button id="clearStats" onClick={handleClear}>
 						<i className="fa-regular fa-circle-xmark"></i>
 					</button>
 				</div>
