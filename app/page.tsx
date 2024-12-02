@@ -1,6 +1,6 @@
 'use client';
 
-import { Header, Main } from '@/components';
+import { Header, Main, Performance } from '@/components';
 import { useState } from 'react';
 
 export default function Home() {
@@ -9,6 +9,7 @@ export default function Home() {
 		<div>
 			<Header setUsername={setUsername} />
 			<Main username={username} />
+			<Performance />
 		</div>
 	);
 }
