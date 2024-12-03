@@ -6,6 +6,22 @@ import { useEffect, useState } from 'react';
 
 type MainProps = {
 	username: string;
+	setGames: React.Dispatch<React.SetStateAction<GameData | undefined>>;
+};
+
+type GameData = {
+	cs2: {
+		faceit_elo: number;
+		skill_level: number;
+		region: string;
+		game_name: string;
+	};
+	csgo: {
+		faceit_elo: number;
+		skill_level: number;
+		region: string;
+		game_name: string;
+	};
 };
 
 type UserData = {
@@ -16,11 +32,19 @@ type UserData = {
 		cs2: {
 			faceit_elo: number;
 			skill_level: number;
+			region: string;
+			game_name: string;
+		};
+		csgo: {
+			faceit_elo: number;
+			skill_level: number;
+			region: string;
+			game_name: string;
 		};
 	};
 };
 
-export function Main({ username }: MainProps) {
+export function Main({ username, setGames }: MainProps) {
 	const [data, setData] = useState<UserData | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
@@ -63,8 +87,13 @@ export function Main({ username }: MainProps) {
 	}
 	// ---
 
+	useEffect(() => {
+		if (data) {
+			setGames(data.games);
+		}
+	}, [data, setGames]);
+
 	if (data && username) {
-		console.log(data);
 		return (
 			<>
 				<div className="main-container">
