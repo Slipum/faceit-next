@@ -1,7 +1,7 @@
 'use client';
 
-import { AnotherStat, Header, Main, Performance } from '@/components';
-import { useState } from 'react';
+import { AnotherStat, Graph, Header, ListMaps, Main, Performance } from '@/components';
+import { useCallback, useState } from 'react';
 
 type GameData = {
 	cs2: {
@@ -20,13 +20,25 @@ type GameData = {
 
 export default function Home() {
 	const [username, setUsername] = useState<string>('');
+	const [userId, setUserId] = useState<string>('');
 	const [games, setGames] = useState<GameData | undefined>(undefined);
+	const [listElo, setListElo] = useState<number[]>([]);
+
+	const updateListElo = useCallback((elo: number[]) => {
+		setListElo(elo);
+	}, []);
 	return (
-		<div>
+		<>
 			<Header setUsername={setUsername} />
-			<Main username={username} setGames={setGames} />
-			<Performance />
-			<AnotherStat games={games} />
-		</div>
+			<Main username={username} setGames={setGames} setUserId={setUserId} />
+			{username && (
+				<>
+					<Performance />
+					<Graph listElo={listElo} />
+					<AnotherStat games={games} />
+					<ListMaps userId={userId} setListElo={updateListElo} />
+				</>
+			)}
+		</>
 	);
 }

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 type MainProps = {
 	username: string;
 	setGames: React.Dispatch<React.SetStateAction<GameData | undefined>>;
+	setUserId: React.Dispatch<React.SetStateAction<string>>;
 };
 
 type GameData = {
@@ -28,6 +29,7 @@ type UserData = {
 	cover_image_url: string;
 	country: string;
 	avatar: string;
+	id: string;
 	games: {
 		cs2: {
 			faceit_elo: number;
@@ -44,7 +46,7 @@ type UserData = {
 	};
 };
 
-export function Main({ username, setGames }: MainProps) {
+export function Main({ username, setGames, setUserId }: MainProps) {
 	const [data, setData] = useState<UserData | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
@@ -92,6 +94,12 @@ export function Main({ username, setGames }: MainProps) {
 			setGames(data.games);
 		}
 	}, [data, setGames]);
+
+	useEffect(() => {
+		if (data) {
+			setUserId(data.id);
+		}
+	}, [data, setUserId]);
 
 	if (data && username) {
 		return (
@@ -146,5 +154,6 @@ export function Main({ username, setGames }: MainProps) {
 		);
 	} else {
 		return <></>;
+		setUserId('');
 	}
 }
