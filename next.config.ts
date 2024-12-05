@@ -2,10 +2,19 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
 	images: {
-		domains: [
-			'distribution.faceit-cdn.net',
-			'cdn-frontend.faceit-cdn.net',
-			'assets.faceit-cdn.net',
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'distribution.faceit-cdn.net',
+			},
+			{
+				protocol: 'https',
+				hostname: 'cdn-frontend.faceit-cdn.net',
+			},
+			{
+				protocol: 'https',
+				hostname: 'assets.faceit-cdn.net',
+			},
 		],
 	},
 };

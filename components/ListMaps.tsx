@@ -40,6 +40,10 @@ export function ListMaps({ userId, setListElo }: ListMapsProps) {
 	const [matches, setMatches] = useState<MatchData[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
+	let maxElo: number = 0;
+	// let lastSessionDate: Date | null = null;
+	// let wins: number = 0;
+	// let totalMatchesToday: number = 0;
 
 	useEffect(() => {
 		const fetchMatches = async () => {
@@ -102,13 +106,74 @@ export function ListMaps({ userId, setListElo }: ListMapsProps) {
 		return <></>;
 	}
 
+	matches.map((match) => {
+		if (match.elo > maxElo) {
+			maxElo = match.elo;
+		}
+
+		// const matchDate: Date = new Date(match.date);
+
+		// const sessionThresholdHours = 5;
+		// const sessionThreshold = new Date(matchDate);
+		// sessionThreshold.setHours(sessionThreshold.getHours() - sessionThresholdHours);
+
+		// if (
+		// 	lastSessionDate === null ||
+		// 	(matchDate.toDateString() !== lastSessionDate.toDateString() && matchDate > sessionThreshold)
+		// ) {
+		// 	lastSessionDate = matchDate;
+		// 	wins = 0;
+		// 	totalMatchesToday = 0;
+		// }
+
+		// totalMatchesToday++;
+		// if (index < matches.length - 1) {
+		// 	if (getEloChange(match.elo, matches[index + 1].elo, 1) > 0) {
+		// 		wins++;
+		// 	}
+		// }
+
+		// const getLastSessionStats = {
+		// 	date: lastSessionDate,
+		// 	wins: wins,
+		// 	totalMatches: totalMatchesToday,
+		// };
+	});
+
+	// // Отображение статистики последней игровой сессии
+	// const statsDiv = document.getElementById('won-matches');
+	// const sessionStats = getLastSessionStats();
+	// const eloGains = matches.reduce((total, match) => {
+	// 	const matchDate = new Date(match.date);
+	// 	if (lastSessionDate && matchDate.toDateString() === lastSessionDate.toDateString()) {
+	// 		if (match.elo !== undefined && previousElo !== null) {
+	// 			const eloChange = match.elo - previousElo;
+	// 			total += eloChange;
+	// 		}
+	// 	}
+	// 	previousElo = match.elo;
+	// 	return total;
+	// }, 0);
+	// const eloGainsText =
+	// 	eloGains > 0
+	// 		? `<p style="padding-left: 10px" class="elo-positive">+${eloGains}</p>`
+	// 		: `<p style="padding-left: 10px" class="elo-negative">${eloGains}</p>`;
+
 	return (
 		<>
 			<div className="title-matches-container">
 				<h3 id="title-All-matches" className="title-all">
 					Last matches
 				</h3>
-				<div id="won-matches"></div>
+				<div id="won-matches">
+					<p style={{ fontSize: '1.4rem', paddingBottom: '10px', color: '#e65b24' }}>
+						Max Elo: {maxElo}
+					</p>
+					{/* <p>
+						Won matches in the last session: ${sessionStats.wins}/${sessionStats.totalMatches}
+					</p>
+					<div style="display: flex">ELO gained in the last session: ${eloGainsText}</div> */}
+				</div>
 			</div>
 			<div className="matches-container">
 				<div id="matches">
@@ -181,8 +246,8 @@ export function ListMaps({ userId, setListElo }: ListMapsProps) {
 	);
 }
 
-function getEloChange(currentElo: number, previousElo: number) {
-	const eloChange = currentElo - previousElo;
+function getEloChange(currentElo: number, previousElo: number, i?: number) {
+	const eloChange: number = currentElo - previousElo;
 	const changeText =
 		eloChange > 0 ? (
 			<>
@@ -201,12 +266,16 @@ function getEloChange(currentElo: number, previousElo: number) {
 		);
 	const changeClass = eloChange > 0 ? 'elo-positive' : 'elo-negative';
 
-	return (
-		<span style={{ display: 'inline-flex', gap: '5px' }} className={changeClass}>
-			{currentElo}
-			{changeText}
-		</span>
-	);
+	if (i) {
+		return eloChange;
+	} else {
+		return (
+			<span style={{ display: 'inline-flex', gap: '5px' }} className={changeClass}>
+				{currentElo}
+				{changeText}
+			</span>
+		);
+	}
 }
 
 function getCellClass(
