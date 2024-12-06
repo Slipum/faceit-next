@@ -169,7 +169,7 @@ export function ListMaps({ userId, setListElo }: ListMapsProps) {
 							{matches.map((match, index) => {
 								const count = 100 - index;
 								return (
-									<tr key={match.matchId}>
+									<tr key={match.date}>
 										<td>
 											<Link
 												href={`https://www.faceit.com/ru/cs2/room/${match.matchId}/scoreboard`}
@@ -203,9 +203,15 @@ export function ListMaps({ userId, setListElo }: ListMapsProps) {
 										<td className={getCellClass(match.kr, 0.75, 0.9, 0.5)}>{match.kr}</td>
 										<td className={getCellClass(match.hs, 62, 72, 40)}>{match.hs}</td>
 										<td>
-											{index < matches.length - 1
-												? getEloChange(match.elo, matches[index + 1].elo)
-												: `${match.elo}`}
+											{index < matches.length - 1 && match.elo !== 0 ? (
+												getEloChange(match.elo, matches[index + 1].elo)
+											) : match.elo !== 0 ? (
+												`${match.elo}`
+											) : (
+												<>
+													<i className="fa-regular fa-circle-xmark fa-xl elo-negative"></i>
+												</>
+											)}
 										</td>
 									</tr>
 								);
