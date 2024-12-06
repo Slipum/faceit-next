@@ -41,9 +41,9 @@ export function ListMaps({ userId, setListElo }: ListMapsProps) {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	let maxElo: number = 0;
-	// let lastSessionDate: Date | null = null;
-	// let wins: number = 0;
-	// let totalMatchesToday: number = 0;
+	let lastSessionElo: number = 0;
+	let wins: number = 0;
+	let totalMatchesToday: number = 0;
 
 	useEffect(() => {
 		const fetchMatches = async () => {
@@ -82,7 +82,10 @@ export function ListMaps({ userId, setListElo }: ListMapsProps) {
 
 				setMatches(formattedMatches);
 
-				const eloList = formattedMatches.map((match: ApiMatchData) => match.elo).reverse();
+				const eloList = formattedMatches
+					.filter((match: ApiMatchData) => match.elo !== 0) // Условие, которое убирает все match.elo со значением 0
+					.map((match: ApiMatchData) => match.elo)
+					.reverse();
 				setListElo(eloList);
 			} catch (err) {
 				setError(err instanceof Error ? err.message : 'Произошла ошибка');
@@ -106,58 +109,20 @@ export function ListMaps({ userId, setListElo }: ListMapsProps) {
 		return <></>;
 	}
 
-	matches.map((match) => {
+	matches.map((match, index) => {
 		if (match.elo > maxElo) {
 			maxElo = match.elo;
 		}
 
-		// const matchDate: Date = new Date(match.date);
+		if (new Date(matches[0].date).toDateString() == new Date(match.date).toDateString()) {
+			lastSessionElo += Number(getEloChange(match.elo, matches[index + 1].elo, 1));
+			totalMatchesToday += 1;
 
-		// const sessionThresholdHours = 5;
-		// const sessionThreshold = new Date(matchDate);
-		// sessionThreshold.setHours(sessionThreshold.getHours() - sessionThresholdHours);
-
-		// if (
-		// 	lastSessionDate === null ||
-		// 	(matchDate.toDateString() !== lastSessionDate.toDateString() && matchDate > sessionThreshold)
-		// ) {
-		// 	lastSessionDate = matchDate;
-		// 	wins = 0;
-		// 	totalMatchesToday = 0;
-		// }
-
-		// totalMatchesToday++;
-		// if (index < matches.length - 1) {
-		// 	if (getEloChange(match.elo, matches[index + 1].elo, 1) > 0) {
-		// 		wins++;
-		// 	}
-		// }
-
-		// const getLastSessionStats = {
-		// 	date: lastSessionDate,
-		// 	wins: wins,
-		// 	totalMatches: totalMatchesToday,
-		// };
+			if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) {
+				wins += 1;
+			}
+		}
 	});
-
-	// // Отображение статистики последней игровой сессии
-	// const statsDiv = document.getElementById('won-matches');
-	// const sessionStats = getLastSessionStats();
-	// const eloGains = matches.reduce((total, match) => {
-	// 	const matchDate = new Date(match.date);
-	// 	if (lastSessionDate && matchDate.toDateString() === lastSessionDate.toDateString()) {
-	// 		if (match.elo !== undefined && previousElo !== null) {
-	// 			const eloChange = match.elo - previousElo;
-	// 			total += eloChange;
-	// 		}
-	// 	}
-	// 	previousElo = match.elo;
-	// 	return total;
-	// }, 0);
-	// const eloGainsText =
-	// 	eloGains > 0
-	// 		? `<p style="padding-left: 10px" class="elo-positive">+${eloGains}</p>`
-	// 		: `<p style="padding-left: 10px" class="elo-negative">${eloGains}</p>`;
 
 	return (
 		<>
@@ -169,10 +134,17 @@ export function ListMaps({ userId, setListElo }: ListMapsProps) {
 					<p style={{ fontSize: '1.4rem', paddingBottom: '10px', color: '#e65b24' }}>
 						Max Elo: {maxElo}
 					</p>
-					{/* <p>
-						Won matches in the last session: ${sessionStats.wins}/${sessionStats.totalMatches}
+					<p>
+						Won matches in the last session: {wins}/{totalMatchesToday}
 					</p>
-					<div style="display: flex">ELO gained in the last session: ${eloGainsText}</div> */}
+					<div style={{ paddingLeft: '15%', display: 'flex' }}>
+						ELO for the last session:{' '}
+						<span
+							style={{ paddingLeft: '1rem' }}
+							className={`${lastSessionElo > 0 ? 'elo-positive' : 'elo-negative'}`}>
+							{lastSessionElo > 0 ? '+' + lastSessionElo : lastSessionElo}
+						</span>
+					</div>
 				</div>
 			</div>
 			<div className="matches-container">
