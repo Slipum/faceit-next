@@ -14,40 +14,17 @@ export const headers = {
 		'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
 };
 
-export const recentResult = {
-	de_mirage: '',
-	de_ancient: '',
-	de_anubis: '',
-	de_dust2: '',
-	de_inferno: '',
-	de_nuke: '',
-	de_train: '',
-	de_vertigo: '',
+type StatType = {
+	title: string;
+	value: number;
+	change: number;
+	ranges: {
+		red: [number, number];
+		yellow: [number, number];
+		green: [number, number];
+	};
 };
-
-export const qualityMap = {
-	de_mirage: 0,
-	de_ancient: 0,
-	de_anubis: 0,
-	de_dust2: 0,
-	de_inferno: 0,
-	de_nuke: 0,
-	de_train: 0,
-	de_vertigo: 0,
-};
-
-export const winrate = {
-	de_mirage: 0,
-	de_ancient: 0,
-	de_anubis: 0,
-	de_dust2: 0,
-	de_inferno: 0,
-	de_nuke: 0,
-	de_train: 0,
-	de_vertigo: 0,
-};
-
-export const stats = [
+export const stats: StatType[] = [
 	{
 		title: 'Win rate %',
 		value: 0,

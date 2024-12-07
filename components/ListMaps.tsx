@@ -177,8 +177,8 @@ export function ListMaps({ userId, setListElo }: ListMapsProps) {
 												rel="noopener noreferrer">
 												{count}
 												<i
-													style={{ paddingLeft: 5 }}
-													className="fa-solid fa-up-right-from-square"></i>
+													style={{ paddingLeft: 5, color: '#20557d' }}
+													className="fa-solid fa-link"></i>
 											</Link>
 										</td>
 										<td>
