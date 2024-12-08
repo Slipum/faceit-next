@@ -1,5 +1,19 @@
-import { stats } from '@/constants';
 import { useState } from 'react';
+
+type StatType = {
+	title: string;
+	value: number;
+	change: number;
+	ranges: {
+		red: [number, number];
+		yellow: [number, number];
+		green: [number, number];
+	};
+};
+
+type PerformanceProps = {
+	stats: StatType[];
+};
 
 type Range = {
 	red: [number, number];
@@ -7,7 +21,7 @@ type Range = {
 	green: [number, number];
 };
 
-export function Performance() {
+export function Performance({ stats }: PerformanceProps) {
 	const [isHovered, setIsHovered] = useState(false);
 
 	return (
@@ -34,30 +48,40 @@ export function Performance() {
 				)}
 				<div className="title">Performance in the last 10 matches</div>
 				<div className="grid" id="stats-grid">
-					{stats.map((stat) => {
-						return (
-							<div key={stat.title} className="stat-card">
-								<div className="stat-title">{stat.title}</div>
-								<div className="stat-value-container">
-									<div className="stat-value">{stat.value}</div>
-									<div
-										className={`stat-change ${
-											stat.change < 0 ? 'negative' : stat.change === 0 ? 'neutral' : ''
-										}`}>
-										{stat.change > 0 && <i className="fa-solid fa-arrow-up fa-bounce"></i>}
-										{stat.change < 0 && <i className="fa-solid fa-arrow-down fa-bounce"></i>}
-										{stat.change == 0 && <i className="fa-solid fa-slash fa-rotate-270 fa-2xs"></i>}
-										{Math.abs(stat.change)}
+					{stats.map(
+						(stat) => {
+							return (
+								<div key={stat.title} className="stat-card">
+									<div className="stat-title">{stat.title}</div>
+									<div className="stat-value-container">
+										<div className="stat-value">{(stat.value / 10).toFixed(2)}</div>
+										<div
+											className={`stat-change ${
+												stat.change < 0 ? 'negative' : stat.change === 0 ? 'neutral' : ''
+											}`}>
+											{stat.change > 0 && <i className="fa-solid fa-arrow-up fa-bounce"></i>}
+											{stat.change < 0 && <i className="fa-solid fa-arrow-down fa-bounce"></i>}
+											{stat.change == 0 && (
+												<i className="fa-solid fa-slash fa-rotate-270 fa-2xs"></i>
+											)}
+											{Math.abs(stat.change)}
+										</div>
+									</div>
+									<div className="stat-bar-container">
+										<div
+											className={`stat-bar ${getColor(
+												Number((stat.value / 10).toFixed(2)),
+												stat.ranges,
+											)}`}
+											style={{
+												width: `${getBarWidth(Number((stat.value / 10).toFixed(2)), stat.ranges)}%`,
+											}}></div>
 									</div>
 								</div>
-								<div className="stat-bar-container">
-									<div
-										className={`stat-bar ${getColor(stat.value, stat.ranges)}`}
-										style={{ width: `${getBarWidth(stat.value, stat.ranges)}%` }}></div>
-								</div>
-							</div>
-						);
-					})}
+							);
+						},
+						[stats],
+					)}
 				</div>
 			</div>
 		</>

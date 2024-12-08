@@ -14,57 +14,6 @@ export const headers = {
 		'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
 };
 
-type StatType = {
-	title: string;
-	value: number;
-	change: number;
-	ranges: {
-		red: [number, number];
-		yellow: [number, number];
-		green: [number, number];
-	};
-};
-export const stats: StatType[] = [
-	{
-		title: 'Win rate %',
-		value: 0,
-		change: 0,
-		ranges: { red: [0, 39], yellow: [40, 52], green: [53, 100] },
-	},
-	{
-		title: 'AVG kills',
-		value: 0,
-		change: 0,
-		ranges: { red: [0, 11.99], yellow: [12, 15.99], green: [16, 25] },
-	},
-	{
-		title: 'K/D',
-		value: 0,
-		change: 0,
-		ranges: { red: [0, 0.79], yellow: [0.8, 1.09], green: [1.1, 2] },
-	},
-	{
-		title: 'K/R',
-		value: 0,
-		change: 0,
-		ranges: { red: [0, 0.5], yellow: [0.51, 0.75], green: [0.76, 2] },
-	},
-	{
-		title: 'Headshot %',
-		value: 0,
-		change: 0,
-		ranges: { red: [0, 39.99], yellow: [40, 62], green: [63, 100] },
-	},
-];
-
-export const statsSET = [
-	{ title: 'Win rate %', value: 0 },
-	{ title: 'AVG kills', value: 0 },
-	{ title: 'K/D', value: 0 },
-	{ title: 'K/R', value: 0 },
-	{ title: 'Headshot %', value: 0 },
-];
-
 // ----
 type MapIcons = {
 	[key: string]: string;
