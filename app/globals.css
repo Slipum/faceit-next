@@ -665,7 +665,7 @@ tbody tr td {
 	gap: 3px;
 }
 
-.fa-bounce {
-	-webkit-animation-iteration-count: var(--fa-animation-iteration-count);
-	animation-iteration-count: var(--fa-animation-iteration-count);
+.stat-change .fa-bounce {
+	-webkit-animation-iteration-count: 1;
+	animation-iteration-count: 1;
 }

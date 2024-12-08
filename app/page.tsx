@@ -43,8 +43,6 @@ export default function Home() {
 		[setListElo],
 	);
 
-	console.log(stats);
-
 	return (
 		<>
 			<Header setUsername={setUsername} />

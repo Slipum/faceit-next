@@ -116,8 +116,22 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 		let totalKD = 0;
 		let totalKR = 0;
 		let totalHS = 0;
+		// ---
+		let changeWins = 0;
+		let changeKills = 0;
+		let changeKD = 0;
+		let changeKR = 0;
+		let changeHS = 0;
 
 		matches.map((match, index) => {
+			changeKills += Number(match.kills);
+			changeKD += Number(match.kd);
+			changeKR += Number(match.kr);
+			changeHS += Number(match.hs);
+			if (index < 99) {
+				if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) changeWins += 1;
+			}
+
 			if (index < 10) {
 				totalKills += Number(match.kills);
 				totalKD += Number(match.kd);
@@ -127,35 +141,37 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 			}
 		});
 
+		console.log(totalHS, changeHS);
+
 		const updatedStats: StatType[] = [
 			{
 				title: 'Win rate %',
 				value: totalWins,
-				change: 0,
+				change: totalWins - changeWins,
 				ranges: { red: [0, 39], yellow: [40, 52], green: [53, 100] },
 			},
 			{
 				title: 'AVG kills',
 				value: totalKills,
-				change: 0,
+				change: Number((totalKills / 10 - changeKills / 100).toFixed(2)),
 				ranges: { red: [0, 11.99], yellow: [12, 15.99], green: [16, 25] },
 			},
 			{
 				title: 'K/D',
 				value: totalKD,
-				change: 0,
+				change: Number((totalKD / 10 - changeKD / 100).toFixed(2)),
 				ranges: { red: [0, 0.79], yellow: [0.8, 1.09], green: [1.1, 2] },
 			},
 			{
 				title: 'K/R',
 				value: totalKR,
-				change: 0,
+				change: Number((totalKR / 10 - changeKR / 100).toFixed(2)),
 				ranges: { red: [0, 0.5], yellow: [0.51, 0.75], green: [0.76, 2] },
 			},
 			{
 				title: 'Headshot %',
 				value: totalHS,
-				change: 0,
+				change: Number((totalHS / 10 - changeHS / 100).toFixed(2)),
 				ranges: { red: [0, 39.99], yellow: [40, 62], green: [63, 100] },
 			},
 		];
