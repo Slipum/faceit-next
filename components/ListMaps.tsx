@@ -14,39 +14,6 @@ type StatType = {
 	};
 };
 
-const stats: StatType[] = [
-	{
-		title: 'Win rate %',
-		value: 0,
-		change: 0,
-		ranges: { red: [0, 39], yellow: [40, 52], green: [53, 100] },
-	},
-	{
-		title: 'AVG kills',
-		value: 0,
-		change: 0,
-		ranges: { red: [0, 11.99], yellow: [12, 15.99], green: [16, 25] },
-	},
-	{
-		title: 'K/D',
-		value: 0,
-		change: 0,
-		ranges: { red: [0, 0.79], yellow: [0.8, 1.09], green: [1.1, 2] },
-	},
-	{
-		title: 'K/R',
-		value: 0,
-		change: 0,
-		ranges: { red: [0, 0.5], yellow: [0.51, 0.75], green: [0.76, 2] },
-	},
-	{
-		title: 'Headshot %',
-		value: 0,
-		change: 0,
-		ranges: { red: [0, 39.99], yellow: [40, 62], green: [63, 100] },
-	},
-];
-
 interface ApiMatchData {
 	matchId: string;
 	date: string;
@@ -89,11 +56,6 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 	let lastSessionElo: number = 0;
 	let wins: number = 0;
 	let totalMatchesToday: number = 0;
-	let setWins: number = 0;
-	let setKills: number = 0;
-	let setKD: number = 0;
-	let setKR: number = 0;
-	let setHS: number = 0;
 
 	useEffect(() => {
 		const fetchMatches = async () => {
@@ -136,7 +98,6 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 					.map((match: ApiMatchData) => match.elo)
 					.reverse();
 				setListElo(eloList);
-				setStats(stats);
 			} catch (err) {
 				setError(err instanceof Error ? err.message : 'Произошла ошибка');
 			} finally {
@@ -146,6 +107,61 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 
 		fetchMatches();
 	}, [userId, setListElo, setStats]);
+
+	useEffect(() => {
+		if (matches.length === 0) return; // Не обновлять, пока нет матчей
+
+		let totalWins = 0;
+		let totalKills = 0;
+		let totalKD = 0;
+		let totalKR = 0;
+		let totalHS = 0;
+
+		matches.map((match, index) => {
+			if (index < 10) {
+				totalKills += Number(match.kills);
+				totalKD += Number(match.kd);
+				totalKR += Number(match.kr);
+				totalHS += Number(match.hs);
+				if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) totalWins += 10;
+			}
+		});
+
+		const updatedStats: StatType[] = [
+			{
+				title: 'Win rate %',
+				value: totalWins,
+				change: 0,
+				ranges: { red: [0, 39], yellow: [40, 52], green: [53, 100] },
+			},
+			{
+				title: 'AVG kills',
+				value: totalKills,
+				change: 0,
+				ranges: { red: [0, 11.99], yellow: [12, 15.99], green: [16, 25] },
+			},
+			{
+				title: 'K/D',
+				value: totalKD,
+				change: 0,
+				ranges: { red: [0, 0.79], yellow: [0.8, 1.09], green: [1.1, 2] },
+			},
+			{
+				title: 'K/R',
+				value: totalKR,
+				change: 0,
+				ranges: { red: [0, 0.5], yellow: [0.51, 0.75], green: [0.76, 2] },
+			},
+			{
+				title: 'Headshot %',
+				value: totalHS,
+				change: 0,
+				ranges: { red: [0, 39.99], yellow: [40, 62], green: [63, 100] },
+			},
+		];
+
+		setStats(updatedStats); // Один вызов
+	}, [matches, setStats]);
 
 	if (isLoading) {
 		return <p>Загрузка...</p>;
@@ -172,25 +188,7 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 				wins += 1;
 			}
 		}
-
-		if (index < 10) {
-			setKills += Number(match.kills);
-			setKD += Number(match.kd);
-			setKR += Number(match.kr);
-			setHS += Number(match.hs);
-			if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) {
-				setWins += 100;
-			}
-		}
 	});
-
-	// Получение статистики
-	stats[0]['value'] = setWins; // Wins
-	stats[1]['value'] = setKills; // Kills
-	stats[2]['value'] = setKD; // KD
-	stats[3]['value'] = setKR; // KR
-	stats[4]['value'] = setHS; // HS
-	//
 	return (
 		<>
 			<div className="title-matches-container">

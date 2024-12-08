@@ -54,7 +54,9 @@ export function Performance({ stats }: PerformanceProps) {
 								<div key={stat.title} className="stat-card">
 									<div className="stat-title">{stat.title}</div>
 									<div className="stat-value-container">
-										<div className="stat-value">{(stat.value / 10).toFixed(2)}</div>
+										<div className="stat-value">
+											{stat.title == 'Win rate %' ? stat.value : (stat.value / 10).toFixed(2)}
+										</div>
 										<div
 											className={`stat-change ${
 												stat.change < 0 ? 'negative' : stat.change === 0 ? 'neutral' : ''
@@ -70,11 +72,18 @@ export function Performance({ stats }: PerformanceProps) {
 									<div className="stat-bar-container">
 										<div
 											className={`stat-bar ${getColor(
-												Number((stat.value / 10).toFixed(2)),
+												Number(
+													stat.title == 'Win rate %' ? stat.value : (stat.value / 10).toFixed(2),
+												),
 												stat.ranges,
 											)}`}
 											style={{
-												width: `${getBarWidth(Number((stat.value / 10).toFixed(2)), stat.ranges)}%`,
+												width: `${getBarWidth(
+													Number(
+														stat.title == 'Win rate %' ? stat.value : (stat.value / 10).toFixed(2),
+													),
+													stat.ranges,
+												)}%`,
 											}}></div>
 									</div>
 								</div>
