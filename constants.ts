@@ -47,3 +47,25 @@ export function getIconMap(map: string): string {
 	}
 }
 // ----
+
+const maps: MapIcons = {
+	de_mirage:
+		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-d16a1e0029.png',
+	de_vertigo:
+		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-60355f0c79.png',
+	de_ancient:
+		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-2dd5e0fa43.png',
+	de_dust2:
+		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-e3a439ea61.png',
+	de_anubis:
+		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-5287fdc954.png',
+	de_nuke:
+		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-60bb2b8bb4.png',
+	de_inferno:
+		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-4505fb0e5f.png',
+	de_train:
+		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-ef700a97ce.png',
+};
+export function getLogoMap(map: string): string {
+	return `<img class="logo-map" src="${maps[map] || ''}" />`;
+}

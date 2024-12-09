@@ -42,10 +42,15 @@ type MatchData = {
 	elo: number;
 };
 
+type winRate = {
+	[key: string]: number;
+};
+
 type ListMapsProps = {
 	userId: string;
 	setListElo: (elo: number[]) => void;
 	setStats: (stats: StatType[]) => void;
+	setWinrate: winRate;
 };
 
 export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
