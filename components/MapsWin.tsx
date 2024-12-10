@@ -1,7 +1,14 @@
 import { getIconMap, getLogoMap } from '@/constants';
 
 type winRate = {
-	[key: string]: number;
+	de_mirage: 0;
+	de_vertigo: 0;
+	de_ancient: 0;
+	de_dust2: 0;
+	de_anubis: 0;
+	de_nuke: 0;
+	de_inferno: 0;
+	de_train: 0;
 };
 
 type mapsProps = {

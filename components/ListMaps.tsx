@@ -42,15 +42,10 @@ type MatchData = {
 	elo: number;
 };
 
-type winRate = {
-	[key: string]: number;
-};
-
 type ListMapsProps = {
 	userId: string;
 	setListElo: (elo: number[]) => void;
 	setStats: (stats: StatType[]) => void;
-	setWinrate: winRate;
 };
 
 export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
@@ -146,8 +141,6 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 			}
 		});
 
-		console.log(totalHS, changeHS);
-
 		const updatedStats: StatType[] = [
 			{
 				title: 'Win rate %',
@@ -181,7 +174,7 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 			},
 		];
 
-		setStats(updatedStats); // Один вызов
+		setStats(updatedStats);
 	}, [matches, setStats]);
 
 	if (isLoading) {
