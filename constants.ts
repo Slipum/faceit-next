@@ -4,7 +4,8 @@ export const headers = {
 	'faceit-referer': 'new-frontend',
 	priority: 'u=1, i',
 	referer: 'https://www.faceit.com/ru/players/s1mle/stats/cs2',
-	'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+	'sec-ch-ua':
+		'"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
 	'sec-ch-ua-mobile': '?0',
 	'sec-ch-ua-platform': '"Windows"',
 	'sec-fetch-dest': 'empty',
@@ -67,5 +68,5 @@ const maps: MapIcons = {
 		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-ef700a97ce.png',
 };
 export function getLogoMap(map: string): string {
-	return `<img class="logo-map" src="${maps[map] || ''}" />`;
+	return maps[map];
 }

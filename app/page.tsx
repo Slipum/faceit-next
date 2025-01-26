@@ -1,6 +1,14 @@
 'use client';
 
-import { AnotherStat, Graph, Header, ListMaps, Main, Performance } from '@/components';
+import {
+	AnotherStat,
+	Graph,
+	Header,
+	ListMaps,
+	Main,
+	MapsWin,
+	Performance,
+} from '@/components';
 import { useCallback, useState } from 'react';
 
 type StatType = {
@@ -52,7 +60,12 @@ export default function Home() {
 					<Performance stats={stats} />
 					<Graph listElo={listElo} />
 					<AnotherStat games={games} />
-					<ListMaps userId={userId} setListElo={updateListElo} setStats={setStats} />
+					<MapsWin winrate={{}} qualityMap={{}} arr={{}} />
+					<ListMaps
+						userId={userId}
+						setListElo={updateListElo}
+						setStats={setStats}
+					/>
 				</>
 			)}
 		</>

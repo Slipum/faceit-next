@@ -1,29 +1,36 @@
 import { getIconMap, getLogoMap } from '@/constants';
+import Image from 'next/image';
 
 type winRate = {
-	de_mirage: 0;
-	de_vertigo: 0;
-	de_ancient: 0;
-	de_dust2: 0;
-	de_anubis: 0;
-	de_nuke: 0;
-	de_inferno: 0;
-	de_train: 0;
+	[key: string]: number;
+};
+
+type rec = {
+	[key: string]: string;
 };
 
 type mapsProps = {
 	winrate: winRate;
+	qualityMap: winRate;
+	arr: rec;
 };
 
-const calculateWinRate = (map: string) => {
-	const rate = (winrate[map] / qualityMap[map] || 0).toFixed(3) * 100;
+const calculateWinRate = (
+	map: string,
+	winrate: winRate,
+	qualityMap: winRate,
+) => {
+	const wins = winrate[map] || 0;
+	const qual = qualityMap[map] || 1;
+	const rate: number = (wins / qual) * 100;
 	return {
 		value: parseFloat(rate.toFixed(1)),
-		color: rate > 50 ? 'rgb(56, 199, 89)' : rate > 35 ? 'rgb(255, 207, 123)' : 'red',
+		color:
+			rate > 50 ? 'rgb(56, 199, 89)' : rate > 35 ? 'rgb(255, 207, 123)' : 'red',
 	};
 };
 
-export function MapsWin({}: mapsProps) {
+export function MapsWin({ winrate, qualityMap }: mapsProps) {
 	const maps: string[] = [
 		'de_mirage',
 		'de_vertigo',
@@ -43,7 +50,7 @@ export function MapsWin({}: mapsProps) {
 			<div className="maps-winning-container">
 				<div id="maps-winnings">
 					{maps.map((mapKey: string) => {
-						const winRateData = calculateWinRate(mapKey);
+						const winRateData = calculateWinRate(mapKey, winrate, qualityMap);
 						return (
 							<div key={mapKey}>
 								<div
@@ -51,10 +58,12 @@ export function MapsWin({}: mapsProps) {
 									style={{
 										backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('${getIconMap(
 											mapKey,
-										)})`,
+										)}`,
 									}}>
 									<div className="winrate-title" style={{ width: '100%' }}>
-										<span style={{ color: `${winRateData.color}` }}>{winRateData.value}</span>
+										<span style={{ color: `${winRateData.color}` }}>
+											{winRateData.value}
+										</span>
 										<span
 											style={{
 												display: 'inline-block',
@@ -66,23 +75,40 @@ export function MapsWin({}: mapsProps) {
 										</span>
 									</div>
 									<div className="logo-map-container">
-										<p style={mapKey == 'de_ancient' ? { paddingBottom: '0.394rem' } : {}}>
-											{getLogoMap(mapKey)}
+										<p
+											style={
+												mapKey == 'de_ancient'
+													? { paddingBottom: '0.394rem' }
+													: {}
+											}>
+											<Image
+												className="logo-map"
+												src={getLogoMap(mapKey) || ''}
+												alt="map"
+												width={70}
+												height={70}
+											/>
 										</p>
 										<span>{mapKey.replace('de_', '').toUpperCase()}</span>
 									</div>
 									<div>
-										<span style={{ display: 'inline-block', width: '100%' }}>Recent results</span>$
-										{arr
-											.map((result) => {
-												let isWin = result === '1';
-												return `
-								<div style="background-color: ${isWin ? 'green' : 'red'}" class="result-indicator">
-									${isWin ? 'W' : 'L'}
-								</div>
-							`;
-											})
-											.join('')}
+										<span style={{ display: 'inline-block', width: '100%' }}>
+											Recent results
+										</span>
+										{/* {arr
+											.map((result: string; index: number) => {
+												return (
+													<div
+															key={index}
+															style={{
+																backgroundColor: result == '1' ? 'green' : 'red'
+															}}
+															className="result-indicator"
+														>
+														{result == '1' ? 'W' : 'L'}
+													</div>
+												);
+											})} */}
 									</div>
 								</div>
 							</div>

@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
 				protocol: 'https',
 				hostname: 'assets.faceit-cdn.net',
 			},
+			{
+				protocol: 'https',
+				hostname: 'tiermaker.com',
+			},
 		],
 	},
 };

@@ -516,7 +516,8 @@ tbody tr td {
 
 .logo-map {
 	width: 70px;
-	padding-top: 7vh;
+	height: 70px;
+	margin-top: 7vh;
 }
 
 .logo-map-container span {
