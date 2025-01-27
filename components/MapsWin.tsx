@@ -50,7 +50,6 @@ export function MapsWin({ arr, winrate, qualityMap }: mapsProps) {
 			<div className="maps-winning-container">
 				<div id="maps-winnings">
 					{maps.map((mapKey: string) => {
-						console.log(arr);
 						const winRateData = calculateWinRate(mapKey, winrate, qualityMap);
 						return (
 							<div key={mapKey}>
