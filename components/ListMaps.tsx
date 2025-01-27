@@ -28,6 +28,14 @@ interface ApiMatchData {
 	elo?: number; // ELO
 }
 
+type winRate = {
+	[key: string]: number;
+};
+
+type rec = {
+	[key: string]: string;
+};
+
 type MatchData = {
 	matchId: string;
 	date: string;
@@ -46,9 +54,19 @@ type ListMapsProps = {
 	userId: string;
 	setListElo: (elo: number[]) => void;
 	setStats: (stats: StatType[]) => void;
+	setWin: (winrate: winRate) => void;
+	setQual: (qual: winRate) => void;
+	setArr: (qual: rec) => void;
 };
 
-export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
+export function ListMaps({
+	userId,
+	setListElo,
+	setStats,
+	setWin,
+	setQual,
+	setArr,
+}: ListMapsProps) {
 	const [matches, setMatches] = useState<MatchData[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
@@ -74,7 +92,9 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 				);
 
 				if (!response.ok) {
-					throw new Error(`Ошибка: ${response.status} - ${response.statusText}`);
+					throw new Error(
+						`Ошибка: ${response.status} - ${response.statusText}`,
+					);
 				}
 
 				const data = await response.json();
@@ -123,13 +143,58 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 		let changeKR = 0;
 		let changeHS = 0;
 
+		const mW: winRate = {
+			de_mirage: 0,
+			de_vertigo: 0,
+			de_ancient: 0,
+			de_dust2: 0,
+			de_anubis: 0,
+			de_nuke: 0,
+			de_inferno: 0,
+			de_train: 0,
+		};
+
+		const mC: winRate = {
+			de_mirage: 0,
+			de_vertigo: 0,
+			de_ancient: 0,
+			de_dust2: 0,
+			de_anubis: 0,
+			de_nuke: 0,
+			de_inferno: 0,
+			de_train: 0,
+		};
+
+		const Arc: rec = {
+			de_mirage: '',
+			de_vertigo: '',
+			de_ancient: '',
+			de_dust2: '',
+			de_anubis: '',
+			de_nuke: '',
+			de_inferno: '',
+			de_train: '',
+		};
+
 		matches.map((match, index) => {
 			changeKills += Number(match.kills);
 			changeKD += Number(match.kd);
 			changeKR += Number(match.kr);
 			changeHS += Number(match.hs);
+			mC[match.map] += 1;
 			if (index < 99) {
-				if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) changeWins += 1;
+				if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) {
+					changeWins += 1;
+					mW[match.map] += 1;
+				}
+			}
+
+			if (Arc[match.map].length < 3) {
+				if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) {
+					Arc[match.map] += '1';
+				} else {
+					Arc[match.map] += '0';
+				}
 			}
 
 			if (index < 10) {
@@ -137,7 +202,9 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 				totalKD += Number(match.kd);
 				totalKR += Number(match.kr);
 				totalHS += Number(match.hs);
-				if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) totalWins += 10;
+				if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) {
+					totalWins += 10;
+				}
 			}
 		});
 
@@ -174,8 +241,11 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 			},
 		];
 
+		setWin(mW);
+		setQual(mC);
+		setArr(Arc);
 		setStats(updatedStats);
-	}, [matches, setStats]);
+	}, [matches, setStats, setWin, setQual, setArr]);
 
 	if (isLoading) {
 		return <p>Загрузка...</p>;
@@ -194,8 +264,13 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 			maxElo = match.elo;
 		}
 
-		if (new Date(matches[0].date).toDateString() == new Date(match.date).toDateString()) {
-			lastSessionElo += Number(getEloChange(match.elo, matches[index + 1].elo, 1));
+		if (
+			new Date(matches[0].date).toDateString() ==
+			new Date(match.date).toDateString()
+		) {
+			lastSessionElo += Number(
+				getEloChange(match.elo, matches[index + 1].elo, 1),
+			);
 			totalMatchesToday += 1;
 
 			if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) {
@@ -210,7 +285,12 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 					Last matches
 				</h3>
 				<div id="won-matches">
-					<p style={{ fontSize: '1.4rem', paddingBottom: '10px', color: '#e65b24' }}>
+					<p
+						style={{
+							fontSize: '1.4rem',
+							paddingBottom: '10px',
+							color: '#e65b24',
+						}}>
 						Max Elo: {maxElo}
 					</p>
 					<p>
@@ -220,7 +300,9 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 						ELO for the last session:{' '}
 						<span
 							style={{ paddingLeft: '1rem' }}
-							className={`${lastSessionElo > 0 ? 'elo-positive' : 'elo-negative'}`}>
+							className={`${
+								lastSessionElo > 0 ? 'elo-positive' : 'elo-negative'
+							}`}>
 							{lastSessionElo > 0 ? '+' + lastSessionElo : lastSessionElo}
 						</span>
 					</div>
@@ -272,15 +354,26 @@ export function ListMaps({ userId, setListElo, setStats }: ListMapsProps) {
 											</p>
 										</td>
 										<td>
-											<Image src={getIconMap(match.map)} alt={match.map} width={70} height={35} />
+											<Image
+												src={getIconMap(match.map)}
+												alt={match.map}
+												width={70}
+												height={35}
+											/>
 										</td>
 										<td>{match.score}</td>
 										<td>{match.kills}</td>
 										<td>{match.assists}</td>
 										<td>{match.deaths}</td>
-										<td className={getCellClass(match.kd, 1, 1.1, 0.8)}>{match.kd}</td>
-										<td className={getCellClass(match.kr, 0.75, 0.9, 0.5)}>{match.kr}</td>
-										<td className={getCellClass(match.hs, 62, 72, 40)}>{match.hs}</td>
+										<td className={getCellClass(match.kd, 1, 1.1, 0.8)}>
+											{match.kd}
+										</td>
+										<td className={getCellClass(match.kr, 0.75, 0.9, 0.5)}>
+											{match.kr}
+										</td>
+										<td className={getCellClass(match.hs, 62, 72, 40)}>
+											{match.hs}
+										</td>
 										<td>
 											{index < matches.length - 1 && match.elo !== 0 ? (
 												getEloChange(match.elo, matches[index + 1].elo)
@@ -327,7 +420,9 @@ function getEloChange(currentElo: number, previousElo: number, i?: number) {
 		return eloChange;
 	} else {
 		return (
-			<span style={{ display: 'inline-flex', gap: '5px' }} className={changeClass}>
+			<span
+				style={{ display: 'inline-flex', gap: '5px' }}
+				className={changeClass}>
 				{currentElo}
 				{changeText}
 			</span>

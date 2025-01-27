@@ -30,7 +30,7 @@ const calculateWinRate = (
 	};
 };
 
-export function MapsWin({ winrate, qualityMap }: mapsProps) {
+export function MapsWin({ arr, winrate, qualityMap }: mapsProps) {
 	const maps: string[] = [
 		'de_mirage',
 		'de_vertigo',
@@ -50,6 +50,7 @@ export function MapsWin({ winrate, qualityMap }: mapsProps) {
 			<div className="maps-winning-container">
 				<div id="maps-winnings">
 					{maps.map((mapKey: string) => {
+						console.log(arr);
 						const winRateData = calculateWinRate(mapKey, winrate, qualityMap);
 						return (
 							<div key={mapKey}>
@@ -95,20 +96,17 @@ export function MapsWin({ winrate, qualityMap }: mapsProps) {
 										<span style={{ display: 'inline-block', width: '100%' }}>
 											Recent results
 										</span>
-										{/* {arr
-											.map((result: string; index: number) => {
-												return (
-													<div
-															key={index}
-															style={{
-																backgroundColor: result == '1' ? 'green' : 'red'
-															}}
-															className="result-indicator"
-														>
-														{result == '1' ? 'W' : 'L'}
-													</div>
-												);
-											})} */}
+										{arr[mapKey] &&
+											arr[mapKey].split('').map((char, index) => (
+												<div
+													key={`${mapKey}-${index}`}
+													style={{
+														backgroundColor: char == '1' ? 'green' : 'red',
+													}}
+													className="result-indicator">
+													{char == '1' ? 'W' : 'L'}
+												</div>
+											))}
 									</div>
 								</div>
 							</div>

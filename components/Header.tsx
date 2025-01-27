@@ -34,7 +34,14 @@ export function Header({ setUsername }: HeaderProps) {
 					<h1>
 						<i className="fa-solid fa-chart-simple"></i> Faceit-Next
 					</h1>
-					<p style={{ fontSize: '24px', padding: '10px 20px', fontWeight: '700' }}>for</p>
+					<p
+						style={{
+							fontSize: '24px',
+							padding: '10px 20px',
+							fontWeight: '700',
+						}}>
+						for
+					</p>
 					<Image
 						style={{ width: '50px', height: 'auto' }}
 						priority
@@ -65,7 +72,10 @@ export function Header({ setUsername }: HeaderProps) {
 				</div>
 			</div>
 			<div className="h-auth">
-				<Link className="github" href="https://github.com/Slipum/faceit-parser" target="_blank">
+				<Link
+					className="github"
+					href="https://github.com/Slipum/faceit-next"
+					target="_blank">
 					<i className="fa-brands fa-github"></i>
 				</Link>
 			</div>

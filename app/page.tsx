@@ -22,6 +22,14 @@ type StatType = {
 	};
 };
 
+type winRate = {
+	[key: string]: number;
+};
+
+type rec = {
+	[key: string]: string;
+};
+
 type GameData = {
 	cs2: {
 		faceit_elo: number;
@@ -43,6 +51,9 @@ export default function Home() {
 	const [games, setGames] = useState<GameData | undefined>(undefined);
 	const [listElo, setListElo] = useState<number[]>([]);
 	const [stats, setStats] = useState<StatType[]>([]); // Состояние для stats
+	const [winrate, setWinrate] = useState<winRate>({});
+	const [qualityMap, setQualityMap] = useState<winRate>({});
+	const [arr, setArr] = useState<rec>({});
 
 	const updateListElo = useCallback(
 		(elo: number[]) => {
@@ -60,11 +71,14 @@ export default function Home() {
 					<Performance stats={stats} />
 					<Graph listElo={listElo} />
 					<AnotherStat games={games} />
-					<MapsWin winrate={{}} qualityMap={{}} arr={{}} />
+					<MapsWin winrate={winrate} qualityMap={qualityMap} arr={arr} />
 					<ListMaps
 						userId={userId}
 						setListElo={updateListElo}
 						setStats={setStats}
+						setWin={setWinrate}
+						setQual={setQualityMap}
+						setArr={setArr}
 					/>
 				</>
 			)}
