@@ -275,6 +275,7 @@ export function ListMaps({
 		return <></>;
 	}
 
+	const day = new Date(matches[0].date).toDateString();
 	matches.map((match, index) => {
 		if (match.elo > maxElo) {
 			maxElo = match.elo;
@@ -352,6 +353,20 @@ export function ListMaps({
 								return (
 									<tr key={match.date}>
 										<td>
+											{day == new Date(match.date).toDateString() ? (
+												<>
+													<i
+														style={{
+															position: 'absolute',
+															left: '0',
+															marginLeft: '8%',
+															marginTop: '10px',
+														}}
+														className="fa-solid fa-clock-rotate-left fa-lg td-tour"></i>
+												</>
+											) : (
+												<></>
+											)}
 											<Link
 												href={`https://www.faceit.com/ru/cs2/room/${match.matchId}/scoreboard`}
 												target="_blank"
