@@ -33,7 +33,7 @@ const calculateWinRate = (
 export function MapsWin({ arr, winrate, qualityMap }: mapsProps) {
 	const maps: string[] = [
 		'de_mirage',
-		'de_vertigo',
+		// 'de_vertigo', // убрал из прогрузки статы за эту карту
 		'de_ancient',
 		'de_dust2',
 		'de_anubis',
