@@ -413,6 +413,10 @@ tbody tr td {
 	font-weight: 700;
 }
 
+.td-tour {
+	color: #eca23a;
+}
+
 .td-green {
 	color: rgb(255, 207, 123);
 	font-weight: 700;

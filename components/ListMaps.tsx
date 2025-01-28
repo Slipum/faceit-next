@@ -22,10 +22,12 @@ interface ApiMatchData {
 	i6?: number; // Убийства
 	i7?: number; // Ассисты
 	i8?: number; // Смерти
+	c10?: number; // ADR
 	c2?: number; // K/D
 	c3?: number; // K/R
 	c4?: number; // HS %
 	elo?: number; // ELO
+	i5?: string; // Team
 }
 
 type winRate = {
@@ -44,10 +46,12 @@ type MatchData = {
 	kills: number;
 	assists: number;
 	deaths: number;
+	adr: number;
 	kd: number;
 	kr: number;
 	hs: number;
 	elo: number;
+	team: string;
 };
 
 type ListMapsProps = {
@@ -106,10 +110,12 @@ export function ListMaps({
 					kills: match.i6 || 0,
 					assists: match.i7 || 0,
 					deaths: match.i8 || 0,
+					adr: match.c10 || 0,
 					kd: match.c2 || 0,
 					kr: match.c3 || 0,
 					hs: match.c4 || 0,
 					elo: match.elo || 0,
+					team: match.i5 || '',
 				}));
 
 				setMatches(formattedMatches);
@@ -133,6 +139,7 @@ export function ListMaps({
 
 		let totalWins = 0;
 		let totalKills = 0;
+		let totalADR = 0;
 		let totalKD = 0;
 		let totalKR = 0;
 		let totalHS = 0;
@@ -140,6 +147,7 @@ export function ListMaps({
 		let changeWins = 0;
 		let changeKills = 0;
 		let changeKD = 0;
+		let changeADR = 0;
 		let changeKR = 0;
 		let changeHS = 0;
 
@@ -178,6 +186,7 @@ export function ListMaps({
 
 		matches.map((match, index) => {
 			changeKills += Number(match.kills);
+			changeADR += Number(match.adr);
 			changeKD += Number(match.kd);
 			changeKR += Number(match.kr);
 			changeHS += Number(match.hs);
@@ -199,6 +208,7 @@ export function ListMaps({
 
 			if (index < 10) {
 				totalKills += Number(match.kills);
+				totalADR += Number(match.adr);
 				totalKD += Number(match.kd);
 				totalKR += Number(match.kr);
 				totalHS += Number(match.hs);
@@ -220,6 +230,12 @@ export function ListMaps({
 				value: totalKills,
 				change: Number((totalKills / 10 - changeKills / 100).toFixed(2)),
 				ranges: { red: [0, 11.99], yellow: [12, 15.99], green: [16, 25] },
+			},
+			{
+				title: 'ADR',
+				value: totalADR,
+				change: Number((totalADR / 10 - changeADR / 100).toFixed(2)),
+				ranges: { red: [0, 60], yellow: [60.1, 75], green: [75.1, 100] },
 			},
 			{
 				title: 'K/D',
@@ -271,7 +287,10 @@ export function ListMaps({
 			lastSessionElo += Number(
 				getEloChange(match.elo, matches[index + 1].elo, 1),
 			);
-			totalMatchesToday += 1;
+
+			if (match.team.includes('team_')) {
+				totalMatchesToday += 1;
+			}
 
 			if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) {
 				wins += 1;
@@ -323,6 +342,7 @@ export function ListMaps({
 								<th>K/D</th>
 								<th>K/R</th>
 								<th>HS %</th>
+								<th>ADR</th>
 								<th>ELO</th>
 							</tr>
 						</thead>
@@ -374,9 +394,16 @@ export function ListMaps({
 										<td className={getCellClass(match.hs, 62, 72, 40)}>
 											{match.hs}
 										</td>
+										<td className={getCellClass(match.adr, 60, 75, 50)}>
+											{match.adr}
+										</td>
 										<td>
 											{index < matches.length - 1 && match.elo !== 0 ? (
 												getEloChange(match.elo, matches[index + 1].elo)
+											) : !match.team.includes('team_') ? (
+												<>
+													<i className="fa-solid fa-trophy fa-xl td-tour"></i>
+												</>
 											) : match.elo !== 0 ? (
 												`${match.elo}`
 											) : (
@@ -417,8 +444,26 @@ function getEloChange(currentElo: number, previousElo: number, i?: number) {
 	const changeClass = eloChange > 0 ? 'elo-positive' : 'elo-negative';
 
 	if (i) {
-		return eloChange;
+		if (eloChange > 500) {
+			return 0;
+		} else {
+			return eloChange;
+		}
 	} else {
+		if (eloChange > 500) {
+			return (
+				<span
+					style={{ display: 'inline-flex', gap: '5px' }}
+					className="td-tour">
+					{currentElo} (—)
+					<div
+						style={{ backgroundColor: '#eca23a', color: '#fff' }}
+						className="result-indicator">
+						T
+					</div>
+				</span>
+			);
+		}
 		return (
 			<span
 				style={{ display: 'inline-flex', gap: '5px' }}
