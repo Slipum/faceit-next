@@ -674,3 +674,42 @@ tbody tr td {
 	-webkit-animation-iteration-count: 1;
 	animation-iteration-count: 1;
 }
+
+/* Стили для кнопки фильтра */
+.filter-button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 1rem;
+	margin-left: 5px;
+}
+
+/* Выпадающее меню */
+.dropdown-filter {
+	top: 100%;
+	left: 0;
+	background: #1b1b1b;
+	border: 1px solid #ccc;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	padding: 10px;
+	z-index: 1000; /* Поверх всего */
+	min-width: 150px;
+}
+
+/* Элементы списка */
+.dropdown-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.f-1 {
+	position: absolute;
+}
+
+.f-2 {
+	position: relative;
+}

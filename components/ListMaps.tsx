@@ -74,6 +74,18 @@ export function ListMaps({
 	const [matches, setMatches] = useState<MatchData[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
+	// Фильтрация
+	const [selectedMaps, setSelectedMaps] = useState<string[]>([]);
+	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const handleMapFilterChange = (map: string) => {
+		setSelectedMaps((prev) =>
+			prev.includes(map) ? prev.filter((m) => m !== map) : [...prev, map],
+		);
+	};
+	const filteredMatches = selectedMaps.length
+		? matches.filter((match) => selectedMaps.includes(match.map))
+		: matches;
+
 	let maxElo: number = 0;
 	let lastSessionElo: number = 0;
 	let wins: number = 0;
@@ -335,7 +347,39 @@ export function ListMaps({
 							<tr>
 								<th>Match</th>
 								<th>Date</th>
-								<th>Map</th>
+								<th>
+									Map
+									<span
+										onClick={() => setIsOpen(!isOpen)}
+										className="filter-button">
+										<i className="fa-solid fa-filter"></i>
+									</span>
+									{isOpen && (
+										<div
+											className={`dropdown-filter  ${
+												filteredMatches.length != 0 ? 'f-1' : 'f-2'
+											}`}>
+											{[
+												'de_mirage',
+												'de_ancient',
+												'de_dust2',
+												'de_anubis',
+												'de_nuke',
+												'de_inferno',
+												'de_train',
+											].map((map) => (
+												<label key={map} className="dropdown-item">
+													<input
+														type="checkbox"
+														checked={selectedMaps.includes(map)}
+														onChange={() => handleMapFilterChange(map)}
+													/>
+													{map.replace('de_', '').toUpperCase()}
+												</label>
+											))}
+										</div>
+									)}
+								</th>
 								<th>Score</th>
 								<th>Kills</th>
 								<th>Assists</th>
@@ -348,7 +392,7 @@ export function ListMaps({
 							</tr>
 						</thead>
 						<tbody>
-							{matches.map((match, index) => {
+							{filteredMatches.map((match, index) => {
 								const count = 100 - index;
 								return (
 									<tr key={match.date}>
