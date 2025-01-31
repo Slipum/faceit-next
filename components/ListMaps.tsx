@@ -415,8 +415,9 @@ export function ListMaps({
 												<></>
 											)}
 											<Link
-												href={`https://www.faceit.com/ru/cs2/room/${match.matchId}/scoreboard`}
-												target="_blank"
+												// href={`https://www.faceit.com/ru/cs2/room/${match.matchId}/scoreboard`}
+												href={`/${match.matchId}`}
+												// target="_blank"
 												rel="noopener noreferrer">
 												{count}
 												<i
