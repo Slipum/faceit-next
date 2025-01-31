@@ -211,7 +211,10 @@ export function ListMaps({
 			}
 
 			if (Arc[match.map].length < 3) {
-				if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) {
+				if (
+					matches[index + 1] &&
+					Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0
+				) {
 					Arc[match.map] += '1';
 				} else {
 					Arc[match.map] += '0';
