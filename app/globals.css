@@ -714,6 +714,11 @@ tbody tr td {
 	position: relative;
 }
 
+.undo-main {
+	position: absolute;
+	padding: 10px 20px;
+}
+
 /* Для отдельных матчей */
 
 .location-container,
@@ -740,13 +745,13 @@ tbody tr td {
 }
 
 .data {
-	margin: 5rem auto 10px auto;
+	margin: 3rem auto 10px auto;
 	text-align: center;
 	width: fit-content;
 }
 
 .layout-match a i {
-	padding-top: 2rem;
+	position: absolute;
 }
 
 .data h3 {

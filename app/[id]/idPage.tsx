@@ -42,11 +42,12 @@ type MatchData = {
 	};
 };
 
-export default function IdPage({
-	params,
-}: {
+type IdPageProps = {
 	params: Promise<{ id: string }>;
-}) {
+	fromPar: string;
+};
+
+export default function IdPage({ params, fromPar }: IdPageProps) {
 	const [match, setMatch] = useState<MatchData | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
@@ -56,7 +57,6 @@ export default function IdPage({
 			try {
 				setIsLoading(true);
 				setError(null);
-
 				const response = await fetch(
 					`/api/proxy?url=https://www.faceit.com/api/match/v2/match/${
 						(
@@ -98,7 +98,7 @@ export default function IdPage({
 		return <></>;
 	}
 
-	if (!params) {
+	if (!params || !fromPar) {
 		return <p>Loading...</p>;
 	}
 
@@ -117,7 +117,7 @@ export default function IdPage({
 
 	return (
 		<div className="layout-match">
-			<Link href={'/'}>
+			<Link href={`/profile?search=${fromPar}`}>
 				<i className="fa-solid fa-reply fa-2xl"></i>
 			</Link>
 			<div className="data">
@@ -150,13 +150,15 @@ export default function IdPage({
 					<div className="players">
 						{match.teams.faction1.roster.map((player) => (
 							<div className="player" key={player.nickname}>
-								<div className="player-container">
-									<PlayerAvatar
-										avatar={player.avatar}
-										nickname={player.nickname}
-									/>
-									<span>{player.nickname}</span>
-								</div>
+								<Link href={`/profile?search=${player.nickname}`}>
+									<div className="player-container">
+										<PlayerAvatar
+											avatar={player.avatar}
+											nickname={player.nickname}
+										/>
+										<span>{player.nickname}</span>
+									</div>
+								</Link>
 							</div>
 						))}
 					</div>
@@ -172,13 +174,15 @@ export default function IdPage({
 					<div className="players">
 						{match.teams.faction2.roster.map((player) => (
 							<div className="player" key={player.nickname}>
-								<div className="player-container">
-									<PlayerAvatar
-										avatar={player.avatar}
-										nickname={player.nickname}
-									/>
-									<span>{player.nickname}</span>
-								</div>
+								<Link href={`/profile?search=${player.nickname}`}>
+									<div className="player-container">
+										<PlayerAvatar
+											avatar={player.avatar}
+											nickname={player.nickname}
+										/>
+										<span>{player.nickname}</span>
+									</div>
+								</Link>
 							</div>
 						))}
 					</div>

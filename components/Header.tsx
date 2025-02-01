@@ -2,31 +2,30 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
-type HeaderProps = {
-	setUsername: (username: string) => void;
-};
-
-export function Header({ setUsername }: HeaderProps) {
+export function Header() {
 	const inputRef = useRef<HTMLInputElement>(null);
+	const router = useRouter(); // Используем useRouter для навигации
 
-	// Для очистки input и props
+	// Очистка поля ввода
 	const handleClear = () => {
 		if (inputRef.current) {
 			inputRef.current.value = '';
-			setUsername('');
 		}
 	};
 
-	// Для отслеживания нажатой клавиши, и только при Enter передаётся в props
+	// Обработка нажатия Enter
 	const handleKeyDown = (evt: React.KeyboardEvent<HTMLInputElement>) => {
-		if (evt.key === 'Enter') {
-			const target = evt.target as HTMLInputElement;
-			const username = target.value;
-			setUsername(username);
+		if (evt.key === 'Enter' && inputRef.current) {
+			const username = inputRef.current.value.trim();
+			if (username) {
+				router.push(`/profile?search=${username}`);
+			}
 		}
 	};
+
 	return (
 		<header className="header-container">
 			<div className="h-logo">
@@ -62,10 +61,9 @@ export function Header({ setUsername }: HeaderProps) {
 						id="username"
 						placeholder="Enter faceit username"
 						autoComplete="off"
-						ref={inputRef} // Привязка компонента через Ref
+						ref={inputRef}
 						onKeyDown={handleKeyDown}
 					/>
-					<button id="fetchStats"></button>
 					<button id="clearStats" onClick={handleClear}>
 						<i className="fa-regular fa-circle-xmark"></i>
 					</button>

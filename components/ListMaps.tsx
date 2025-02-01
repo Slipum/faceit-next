@@ -16,6 +16,7 @@ type StatType = {
 
 interface ApiMatchData {
 	matchId: string;
+	nickname: string;
 	date: string;
 	i1?: string; // Карта
 	i18?: string; // Счет
@@ -40,6 +41,7 @@ type rec = {
 
 type MatchData = {
 	matchId: string;
+	nickname: string;
 	date: string;
 	map: string;
 	score: string;
@@ -116,6 +118,7 @@ export function ListMaps({
 				const data = await response.json();
 				const formattedMatches = data.map((match: ApiMatchData) => ({
 					matchId: match.matchId,
+					nickname: match.nickname,
 					date: match.date,
 					map: match.i1 || 'N/A',
 					score: match.i18 || 'N/A',
@@ -416,7 +419,7 @@ export function ListMaps({
 											)}
 											<Link
 												// href={`https://www.faceit.com/ru/cs2/room/${match.matchId}/scoreboard`}
-												href={`/${match.matchId}`}
+												href={`/${match.matchId}?from=${match.nickname}`}
 												// target="_blank"
 												rel="noopener noreferrer">
 												{count}
