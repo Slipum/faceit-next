@@ -207,7 +207,7 @@ export function ListMaps({
 			changeHS += Number(match.hs);
 			mC[match.map] += 1;
 			if (index < 99) {
-				if (Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) {
+				if (matches[index + 1] && Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) {
 					changeWins += 1;
 					mW[match.map] += 1;
 				}

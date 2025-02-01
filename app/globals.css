@@ -770,6 +770,7 @@ tbody tr td {
 .player-container {
 	display: flex;
 	border: 0;
+	justify-content: space-between;
 }
 
 .player {
@@ -787,6 +788,13 @@ tbody tr td {
 	padding-left: 1rem;
 }
 
+.left,
+.right {
+	display: flex;
+	margin: auto 0;
+	gap: 5px;
+}
+
 .team-win {
 	color: #66bb6a;
 	margin-top: 20px;
@@ -795,6 +803,29 @@ tbody tr td {
 .team-one,
 .team-two {
 	min-width: 250px;
+}
+
+.team-two h1 {
+	margin-left: auto;
+	width: fit-content;
+}
+
+.right h1 {
+	margin-left: auto;
+}
+
+.right img {
+	margin-left: 5px;
+}
+
+.left img,
+.right img {
+	border-radius: 20%;
+}
+
+.l-container,
+.r-container {
+	margin-bottom: 20px;
 }
 
 /* -------------------- */

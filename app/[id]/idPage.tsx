@@ -12,19 +12,23 @@ type MatchData = {
 	teams: {
 		faction1: {
 			name: string;
+			avatar: string;
 			roster: [
 				{
 					nickname: string;
 					avatar: string;
+					elo: number;
 				},
 			];
 		};
 		faction2: {
 			name: string;
+			avatar: string;
 			roster: [
 				{
 					nickname: string;
 					avatar: string;
+					elo: number;
 				},
 			];
 		};
@@ -42,6 +46,10 @@ type MatchData = {
 	};
 };
 
+type MatchStats = {
+	i18: string; // раунды
+};
+
 type IdPageProps = {
 	params: Promise<{ id: string }>;
 	fromPar: Promise<{ from: string }>;
@@ -49,6 +57,7 @@ type IdPageProps = {
 
 export default function IdPage({ params, fromPar }: IdPageProps) {
 	const [match, setMatch] = useState<MatchData | null>(null);
+	const [matchStats, setMatchStats] = useState<MatchStats | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [back, setBack] = useState<string>('');
@@ -74,9 +83,27 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 					throw new Error(`Error: ${response.status} - ${response.statusText}`);
 				}
 
-				const data = await response.json();
+				const Matchdata = await response.json();
 
-				setMatch(data.payload);
+				const stateRes = await fetch(
+					`/api/proxy?url=https://www.faceit.com/api/stats/v1/stats/matches/${
+						(
+							await params
+						).id
+					}`,
+					{
+						method: 'GET',
+						headers: headers,
+					},
+				);
+
+				if (!stateRes.ok) {
+					throw new Error(`Error: ${stateRes.status} - ${stateRes.statusText}`);
+				}
+
+				const statsData = await stateRes.json();
+				setMatch(Matchdata.payload);
+				setMatchStats(statsData[0]);
 			} catch (err) {
 				setError(err instanceof Error ? err.message : "There's been an error");
 			} finally {
@@ -122,10 +149,24 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 		if (s == 'kazakhstan') return 'kz';
 		if (s == 'france') return 'fr';
 		if (s == 'uk') return 'uk';
+		if (s == 'sweden') return 'se';
+	}
+
+	function getLVL(lvl: number) {
+		if (lvl <= 500) return '1';
+		if (lvl <= 750) return '2';
+		if (lvl <= 900) return '3';
+		if (lvl <= 1050) return '4';
+		if (lvl <= 1200) return '5';
+		if (lvl <= 1350) return '6';
+		if (lvl <= 1530) return '7';
+		if (lvl <= 1750) return '8';
+		if (lvl <= 2000) return '9';
+		return '10';
 	}
 
 	const map = match.voting.map.pick[0].slice(3);
-
+	const rounds = matchStats?.i18.split('/');
 	return (
 		<div className="layout-match">
 			<Link href={`/profile?search=${back}`}>
@@ -157,17 +198,49 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 			</div>
 			<div className="teams">
 				<div className="team-one">
-					<h1>{match.teams.faction1.name}</h1>
+					{rounds && (
+						<h1
+							style={{
+								color: `${rounds[0] > rounds[1] ? '#66bb6a' : '#ff4d4f'}`,
+								padding: '5px',
+								margin: '5px',
+								width: 'fit-content',
+							}}>
+							{rounds[0]}
+						</h1>
+					)}
+					<div className="right r-container">
+						<Image
+							src={match.teams.faction1.avatar}
+							alt={'team1'}
+							width={48}
+							height={48}
+						/>
+						<h1>{match.teams.faction1.name}</h1>
+					</div>
 					<div className="players">
 						{match.teams.faction1.roster.map((player) => (
 							<div className="player" key={player.nickname}>
 								<Link href={`/profile?search=${player.nickname}`}>
 									<div className="player-container">
-										<PlayerAvatar
-											avatar={player.avatar}
-											nickname={player.nickname}
-										/>
-										<span>{player.nickname}</span>
+										<div className="left">
+											<PlayerAvatar
+												avatar={player.avatar}
+												nickname={player.nickname}
+											/>
+											<span>{player.nickname}</span>
+										</div>
+										<div className="right">
+											<span>{player.elo}</span>
+											<Image
+												src={`https://cdn-frontend.faceit-cdn.net/web/static/media/assets_images_skill-icons_skill_level_${getLVL(
+													player.elo,
+												)}_svg.svg`}
+												alt={getLVL(player.elo)}
+												width={32}
+												height={32}
+											/>
+										</div>
 									</div>
 								</Link>
 							</div>
@@ -181,17 +254,48 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 						: match.teams.faction2.name}
 				</h2>
 				<div className="team-two">
-					<h1>{match.teams.faction2.name}</h1>
+					{rounds && (
+						<h1
+							style={{
+								color: `${rounds[1] > rounds[0] ? '#66bb6a' : '#ff4d4f'}`,
+								padding: '5px',
+								width: 'fit-content',
+							}}>
+							{rounds[1]}
+						</h1>
+					)}
+					<div className="left l-container">
+						<Image
+							src={match.teams.faction2.avatar}
+							alt={'team2'}
+							width={48}
+							height={48}
+						/>
+						<h1>{match.teams.faction2.name}</h1>
+					</div>
 					<div className="players">
 						{match.teams.faction2.roster.map((player) => (
 							<div className="player" key={player.nickname}>
 								<Link href={`/profile?search=${player.nickname}`}>
 									<div className="player-container">
-										<PlayerAvatar
-											avatar={player.avatar}
-											nickname={player.nickname}
-										/>
-										<span>{player.nickname}</span>
+										<div className="left">
+											<PlayerAvatar
+												avatar={player.avatar}
+												nickname={player.nickname}
+											/>
+											<span>{player.nickname}</span>
+										</div>
+										<div className="right">
+											<span>{player.elo}</span>
+											<Image
+												src={`https://cdn-frontend.faceit-cdn.net/web/static/media/assets_images_skill-icons_skill_level_${getLVL(
+													player.elo,
+												)}_svg.svg`}
+												alt={getLVL(player.elo)}
+												width={32}
+												height={32}
+											/>
+										</div>
 									</div>
 								</Link>
 							</div>
