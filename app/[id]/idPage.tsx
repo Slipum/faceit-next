@@ -48,6 +48,36 @@ type MatchData = {
 
 type MatchStats = {
 	i18: string; // раунды
+	teams: [
+		{
+			players: [
+				{
+					nickname: string;
+					i6: string; // kills
+					i8: string; // deaths
+					i7: string; // assists
+					c10: string; // adr
+					c4: string; // headshots
+					c2: string; // kd
+					c3: string; // kr
+				},
+			];
+		},
+		{
+			players: [
+				{
+					nickname: string;
+					i6: string; // kills
+					i8: string; // deaths
+					i7: string; // assists
+					c10: string; // adr
+					c4: string; // headshots
+					c2: string; // kd
+					c3: string; // kr
+				},
+			];
+		},
+	];
 };
 
 type IdPageProps = {
@@ -176,32 +206,14 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 				<h3>{new Date(match.finishedAt).toDateString()}</h3>
 				<span>{new Date(match.finishedAt).toLocaleTimeString()}</span>
 			</div>
-			<div className="location-container">
-				<Image
-					src={`https://distribution.faceit-cdn.net/images/flags/v1/${getFlag(
-						match.voting.location.pick[0].toLocaleLowerCase(),
-					)}.jpg?width=110&height=55`}
-					alt={match.voting.location.pick[0].slice(0, 2).toLocaleLowerCase()}
-					width={56}
-					height={32}
-				/>
-				<p>{match.voting.location.pick[0]}</p>
-			</div>
-			<div className="map-container">
-				<Image
-					src={getIconMap(match.voting.map.pick[0])}
-					alt={match.voting.location.pick[0].slice(0, 2).toLocaleLowerCase()}
-					width={56}
-					height={32}
-				/>
-				<p>{map.charAt(0).toUpperCase() + map.slice(1)}</p>
-			</div>
 			<div className="teams">
 				<div className="team-one">
 					{rounds && (
 						<h1
 							style={{
-								color: `${rounds[0] > rounds[1] ? '#66bb6a' : '#ff4d4f'}`,
+								color: `${
+									Number(rounds[0]) > Number(rounds[1]) ? '#66bb6a' : '#ff4d4f'
+								}`,
 								padding: '5px',
 								margin: '5px',
 								width: 'fit-content',
@@ -213,8 +225,8 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 						<Image
 							src={match.teams.faction1.avatar}
 							alt={'team1'}
-							width={48}
-							height={48}
+							width={100}
+							height={100}
 						/>
 						<h1>{match.teams.faction1.name}</h1>
 					</div>
@@ -222,24 +234,51 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 						{match.teams.faction1.roster.map((player) => (
 							<div className="player" key={player.nickname}>
 								<Link href={`/profile?search=${player.nickname}`}>
-									<div className="player-container">
-										<div className="left">
-											<PlayerAvatar
-												avatar={player.avatar}
-												nickname={player.nickname}
-											/>
-											<span>{player.nickname}</span>
+									<PlayerAvatar
+										avatar={player.avatar}
+										nickname={player.nickname}
+									/>
+									<div className="pl-cont">
+										<div className="player-container">
+											<div className="left">
+												<span>{player.nickname}</span>
+											</div>
+											<div className="right">
+												<span>{player.elo}</span>
+												<Image
+													src={`https://cdn-frontend.faceit-cdn.net/web/static/media/assets_images_skill-icons_skill_level_${getLVL(
+														player.elo,
+													)}_svg.svg`}
+													alt={getLVL(player.elo)}
+													width={32}
+													height={32}
+												/>
+											</div>
 										</div>
-										<div className="right">
-											<span>{player.elo}</span>
-											<Image
-												src={`https://cdn-frontend.faceit-cdn.net/web/static/media/assets_images_skill-icons_skill_level_${getLVL(
-													player.elo,
-												)}_svg.svg`}
-												alt={getLVL(player.elo)}
-												width={32}
-												height={32}
-											/>
+										<div className="player-stats">
+											{matchStats &&
+												matchStats.teams[0].players
+													.filter((p) => player.nickname == p.nickname)
+													.map((p) => (
+														<table key={p.nickname}>
+															<thead>
+																<tr>
+																	<th>Kills</th>
+																	<th>K/D</th>
+																	<th>K/R</th>
+																	<th>ADR</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>{p.i6}</td>
+																	<td>{p.c2}</td>
+																	<td>{p.c3}</td>
+																	<td>{p.c10}</td>
+																</tr>
+															</tbody>
+														</table>
+													))}
 										</div>
 									</div>
 								</Link>
@@ -247,17 +286,45 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 						))}
 					</div>
 				</div>
-				<h2 className="team-win">
-					Winner is{' '}
-					{match.summaryResults.winner == 'faction1'
-						? match.teams.faction1.name
-						: match.teams.faction2.name}
-				</h2>
+				<div className="">
+					<h2 className="team-win">
+						Winner is{' '}
+						{match.summaryResults.winner == 'faction1'
+							? match.teams.faction1.name
+							: match.teams.faction2.name}
+					</h2>
+					<div className="location-container">
+						<Image
+							src={`https://distribution.faceit-cdn.net/images/flags/v1/${getFlag(
+								match.voting.location.pick[0].toLocaleLowerCase(),
+							)}.jpg?width=110&height=55`}
+							alt={match.voting.location.pick[0]
+								.slice(0, 2)
+								.toLocaleLowerCase()}
+							width={56}
+							height={32}
+						/>
+						<p>{match.voting.location.pick[0]}</p>
+					</div>
+					<div className="map-container">
+						<Image
+							src={getIconMap(match.voting.map.pick[0])}
+							alt={match.voting.location.pick[0]
+								.slice(0, 2)
+								.toLocaleLowerCase()}
+							width={56}
+							height={32}
+						/>
+						<p>{map.charAt(0).toUpperCase() + map.slice(1)}</p>
+					</div>
+				</div>
 				<div className="team-two">
 					{rounds && (
 						<h1
 							style={{
-								color: `${rounds[1] > rounds[0] ? '#66bb6a' : '#ff4d4f'}`,
+								color: `${
+									Number(rounds[1]) > Number(rounds[0]) ? '#66bb6a' : '#ff4d4f'
+								}`,
 								padding: '5px',
 								width: 'fit-content',
 							}}>
@@ -268,8 +335,8 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 						<Image
 							src={match.teams.faction2.avatar}
 							alt={'team2'}
-							width={48}
-							height={48}
+							width={100}
+							height={100}
 						/>
 						<h1>{match.teams.faction2.name}</h1>
 					</div>
@@ -277,24 +344,51 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 						{match.teams.faction2.roster.map((player) => (
 							<div className="player" key={player.nickname}>
 								<Link href={`/profile?search=${player.nickname}`}>
-									<div className="player-container">
-										<div className="left">
-											<PlayerAvatar
-												avatar={player.avatar}
-												nickname={player.nickname}
-											/>
-											<span>{player.nickname}</span>
+									<PlayerAvatar
+										avatar={player.avatar}
+										nickname={player.nickname}
+									/>
+									<div className="pl-cont">
+										<div className="player-container">
+											<div className="left">
+												<span>{player.nickname}</span>
+											</div>
+											<div className="right">
+												<span>{player.elo}</span>
+												<Image
+													src={`https://cdn-frontend.faceit-cdn.net/web/static/media/assets_images_skill-icons_skill_level_${getLVL(
+														player.elo,
+													)}_svg.svg`}
+													alt={getLVL(player.elo)}
+													width={32}
+													height={32}
+												/>
+											</div>
 										</div>
-										<div className="right">
-											<span>{player.elo}</span>
-											<Image
-												src={`https://cdn-frontend.faceit-cdn.net/web/static/media/assets_images_skill-icons_skill_level_${getLVL(
-													player.elo,
-												)}_svg.svg`}
-												alt={getLVL(player.elo)}
-												width={32}
-												height={32}
-											/>
+										<div className="player-stats">
+											{matchStats &&
+												matchStats.teams[1].players
+													.filter((p) => player.nickname == p.nickname)
+													.map((p) => (
+														<table key={p.nickname}>
+															<thead>
+																<tr>
+																	<th>Kills</th>
+																	<th>K/D</th>
+																	<th>K/R</th>
+																	<th>ADR</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>{p.i6}</td>
+																	<td>{p.c2}</td>
+																	<td>{p.c3}</td>
+																	<td>{p.c10}</td>
+																</tr>
+															</tbody>
+														</table>
+													))}
 										</div>
 									</div>
 								</Link>

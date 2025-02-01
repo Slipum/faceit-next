@@ -15,13 +15,13 @@ const PlayerAvatar = ({ avatar, nickname }: PlayerProps) => {
 				<Image
 					src={avatar}
 					alt={nickname}
-					width={40}
-					height={40}
+					width={78}
+					height={78}
 					onError={() => setImageError(true)}
 				/>
 			) : (
 				<div id="avatar">
-					<Image src="/Group1.png" alt="avatar" width={40} height={40} />
+					<Image src="/Group1.png" alt="avatar" width={78} height={78} />
 				</div>
 			)}
 		</>

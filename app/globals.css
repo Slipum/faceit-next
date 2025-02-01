@@ -733,6 +733,10 @@ tbody tr td {
 	margin: 0 auto;
 }
 
+.location-container {
+	margin-top: 20px;
+}
+
 .map-container {
 	margin-top: 10px;
 	background-color: #1b1b1b;
@@ -745,7 +749,7 @@ tbody tr td {
 }
 
 .data {
-	margin: 3rem auto 10px auto;
+	margin: 1rem auto 10px auto;
 	text-align: center;
 	width: fit-content;
 }
@@ -778,8 +782,23 @@ tbody tr td {
 	border: 1px solid #2c2c2c;
 	border-radius: 1rem;
 	margin: 10px 0;
+	display: flex;
+}
+
+.player a {
+	width: 100%;
+	display: inline-flex;
+}
+
+.player a img {
+	border-radius: 20%;
+}
+
+.pl-cont {
+	display: block;
 	align-items: center;
 	text-align: center;
+	width: 100%;
 }
 
 .player span {
@@ -791,8 +810,15 @@ tbody tr td {
 .left,
 .right {
 	display: flex;
-	margin: auto 0;
 	gap: 5px;
+}
+
+.left h1 {
+	margin: auto 0;
+}
+
+.right h1 {
+	margin: auto 0 auto 10px;
 }
 
 .team-win {
@@ -802,16 +828,12 @@ tbody tr td {
 
 .team-one,
 .team-two {
-	min-width: 250px;
+	width: 400px;
 }
 
 .team-two h1 {
 	margin-left: auto;
 	width: fit-content;
-}
-
-.right h1 {
-	margin-left: auto;
 }
 
 .right img {
@@ -828,4 +850,46 @@ tbody tr td {
 	margin-bottom: 20px;
 }
 
+.team-two .l-container h1 {
+	margin-left: 0;
+}
+
+.team-two .l-container img {
+	margin-left: auto;
+}
+
+.player-stats table {
+	width: 100%;
+	padding-top: 3px;
+}
+
+.player-stats table thead tr th {
+	font-size: 10px;
+	font-weight: 400;
+	opacity: 0.5;
+}
+
+.player-stats table tbody tr td {
+	font-size: 1px;
+	font-weight: 600;
+}
+
+.player-stats table tbody tr td,
+.player-stats table thead tr td {
+	width: fit-content;
+}
+
+.fa-reply {
+	margin-top: 20px;
+}
 /* -------------------- */
+
+/* ADAPTIVITY */
+
+@media only screen and (max-width: 1328px) {
+	.layout-match {
+		width: 90%;
+	}
+}
+
+/* ---------- */
