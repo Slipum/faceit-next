@@ -2,6 +2,7 @@
 
 import { getIconMap, headers } from '@/constants';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import PlayerAvatar from './PlayerAvatar';
 
@@ -116,6 +117,9 @@ export default function IdPage({
 
 	return (
 		<div className="layout-match">
+			<Link href={'/'}>
+				<i className="fa-solid fa-reply fa-2xl"></i>
+			</Link>
 			<div className="data">
 				<h3>{new Date(match.finishedAt).toDateString()}</h3>
 				<span>{new Date(match.finishedAt).toLocaleTimeString()}</span>

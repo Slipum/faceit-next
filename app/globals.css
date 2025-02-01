@@ -737,13 +737,16 @@ tbody tr td {
 .layout-match {
 	margin: 0 auto;
 	width: 80%;
-	margin-top: 5rem;
 }
 
 .data {
-	margin: 0 auto 10px auto;
+	margin: 5rem auto 10px auto;
 	text-align: center;
 	width: fit-content;
+}
+
+.layout-match a i {
+	padding-top: 2rem;
 }
 
 .data h3 {
