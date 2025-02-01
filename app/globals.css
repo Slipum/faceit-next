@@ -656,6 +656,10 @@ tbody tr td {
 	background-color: #66bb6a;
 }
 
+.stat-bar.greenM {
+	background-color: #00ffb7;
+}
+
 .stat-value-container {
 	display: flex;
 	justify-content: center;
@@ -851,7 +855,7 @@ tbody tr td {
 }
 
 .team-two .l-container h1 {
-	margin-left: 0;
+	margin-left: 10px;
 }
 
 .team-two .l-container img {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 type StatType = {
 	title: string;
@@ -101,6 +101,7 @@ function getColor(value: number, ranges: Range) {
 	if (value >= ranges.red[0] && value <= ranges.red[1]) return 'red';
 	if (value >= ranges.yellow[0] && value <= ranges.yellow[1]) return 'yellow';
 	if (value >= ranges.green[0] && value <= ranges.green[1]) return 'green';
+	if (value >= ranges.green[1]) return 'greenM'
 	return 'gray';
 }
 
@@ -111,6 +112,8 @@ function getBarWidth(value: number, ranges: Range) {
 		return ((value - ranges.yellow[0]) / (ranges.yellow[1] - ranges.yellow[0])) * 33 + 33;
 	} else if (value >= ranges.green[0] && value <= ranges.green[1]) {
 		return ((value - ranges.green[0]) / (ranges.green[1] - ranges.green[0])) * 34 + 66;
+	} else if (value >= ranges.green[1]) {
+		return 100
 	}
 	return 0;
 }

@@ -63,13 +63,18 @@ export function Main({ username, setGames, setUserId }: MainProps) {
 				}
 
 				const url = `https://www.faceit.com/api/users/v1/nicknames/${cleanUsername}`;
-				const response = await fetch(`/api/proxy?url=${encodeURIComponent(url)}`, {
-					method: 'GET',
-					headers: headers,
-				});
+				const response = await fetch(
+					`/api/proxy?url=${encodeURIComponent(url)}`,
+					{
+						method: 'GET',
+						headers: headers,
+					},
+				);
 
 				if (!response.ok) {
-					throw new Error(`Ошибка сети: ${response.status} - ${response.statusText}`);
+					throw new Error(
+						`Ошибка сети: ${response.status} - ${response.statusText}`,
+					);
 				}
 
 				const result = await response.json();
@@ -118,9 +123,21 @@ export function Main({ username, setGames, setUserId }: MainProps) {
 							<div className="overlay"></div>
 							<div id="userInfo" className="user-info">
 								{data.avatar ? (
-									<Image id="avatar" src={data.avatar} alt="avatar" width={300} height={300} />
+									<Image
+										id="avatar"
+										src={data.avatar}
+										alt="avatar"
+										width={300}
+										height={300}
+									/>
 								) : (
-									<Image id="avatar" src="/Group1.png" alt="avatar" width={300} height={300} />
+									<Image
+										id="avatar"
+										src="/Group2.png"
+										alt="avatar"
+										width={300}
+										height={300}
+									/>
 								)}
 								<div className="avg-container">
 									<div id="average-kills">
