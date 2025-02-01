@@ -5,12 +5,6 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import PlayerAvatar from './PlayerAvatar';
 
-interface IdPageProps {
-	params: {
-		id: string;
-	};
-}
-
 type MatchData = {
 	id: string;
 	finishedAt: string;
@@ -47,9 +41,12 @@ type MatchData = {
 	};
 };
 
-export default function IdPage({ params }: IdPageProps) {
+export default function IdPage({
+	params,
+}: {
+	params: Promise<{ id: string }>;
+}) {
 	const [match, setMatch] = useState<MatchData | null>(null);
-	const { id } = params; // Получаем параметр `id` из URL
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 
@@ -60,7 +57,11 @@ export default function IdPage({ params }: IdPageProps) {
 				setError(null);
 
 				const response = await fetch(
-					`/api/proxy?url=https://www.faceit.com/api/match/v2/match/${id}`,
+					`/api/proxy?url=https://www.faceit.com/api/match/v2/match/${
+						(
+							await params
+						).id
+					}`,
 					{
 						method: 'GET',
 						headers: headers,
@@ -82,7 +83,7 @@ export default function IdPage({ params }: IdPageProps) {
 		};
 
 		fetchMatch();
-	}, [id]);
+	}, [params]);
 
 	if (isLoading) {
 		return <p>Loading...</p>;
@@ -94,6 +95,10 @@ export default function IdPage({ params }: IdPageProps) {
 
 	if (!match) {
 		return <></>;
+	}
+
+	if (!params) {
+		return <p>Loading...</p>;
 	}
 
 	function getFlag(s: string) {
