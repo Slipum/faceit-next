@@ -5,7 +5,7 @@ export async function generateMetadata({
 	searchParams,
 }: {
 	params: Promise<{ id: string }>;
-	searchParams: { from?: string };
+	searchParams: Promise<{ from?: string }>;
 }) {
 	return {
 		title: `${(await params).id}`,
@@ -20,7 +20,7 @@ export default async function MatchLayout({
 	searchParams,
 }: {
 	params: Promise<{ id: string }>;
-	searchParams: { from: string };
+	searchParams: Promise<{ from: string }>;
 }) {
-	return <IdPage params={params} fromPar={searchParams.from} />;
+	return <IdPage params={params} fromPar={searchParams} />;
 }

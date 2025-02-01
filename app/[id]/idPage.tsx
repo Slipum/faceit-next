@@ -44,13 +44,14 @@ type MatchData = {
 
 type IdPageProps = {
 	params: Promise<{ id: string }>;
-	fromPar: string;
+	fromPar: Promise<{ from: string }>;
 };
 
 export default function IdPage({ params, fromPar }: IdPageProps) {
 	const [match, setMatch] = useState<MatchData | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
+	const [back, setBack] = useState<string>('');
 
 	useEffect(() => {
 		const fetchMatch = async () => {
@@ -83,8 +84,18 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 			}
 		};
 
+		const fetchFrom = async () => {
+			try {
+				const res = await fromPar;
+				setBack(res.from);
+			} catch (err) {
+				setError(err instanceof Error ? err.message : "There's been an error");
+			}
+		};
+
+		fetchFrom();
 		fetchMatch();
-	}, [params]);
+	}, [params, fromPar]);
 
 	if (isLoading) {
 		return <p>Loading...</p>;
@@ -117,7 +128,7 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 
 	return (
 		<div className="layout-match">
-			<Link href={`/profile?search=${fromPar}`}>
+			<Link href={`/profile?search=${back}`}>
 				<i className="fa-solid fa-reply fa-2xl"></i>
 			</Link>
 			<div className="data">
