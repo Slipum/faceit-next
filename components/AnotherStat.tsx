@@ -23,14 +23,19 @@ export function AnotherStat({ games }: AnotherStatProps) {
 	if (!games) {
 		return <></>;
 	}
-	const renderGameInfo = (game: GameData['cs2'] | GameData['csgo'], title: string) => (
+	const renderGameInfo = (
+		game: GameData['cs2'] | GameData['csgo'],
+		title: string,
+	) => (
 		<div className="game-info">
 			<h2>{title}</h2>
 			<p>Steam Name: {game.game_name}</p>
 			<p>Faceit Elo: {game.faceit_elo}</p>
 			<p>
 				Region:{' '}
-				{game.region === 'EU' ? <i className={`fi fi-${game.region.toLowerCase()}`}></i> : null}{' '}
+				{game.region === 'EU' ? (
+					<i className={`fi fi-${game.region.toLowerCase()}`}></i>
+				) : null}{' '}
 				{game.region}
 			</p>
 			<p>
@@ -52,7 +57,7 @@ export function AnotherStat({ games }: AnotherStatProps) {
 			<div className="games-container">
 				<div id="games">
 					{renderGameInfo(games.cs2, 'CS2 Statistics')}
-					{renderGameInfo(games.csgo, 'CSGO Statistics')}
+					{games.csgo && renderGameInfo(games.csgo, 'CSGO Statistics')}
 				</div>
 			</div>
 		</>
