@@ -10,7 +10,7 @@ import {
 } from '@/components';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { Suspense, useCallback, useState } from 'react';
 
 type StatType = {
 	title: string;
@@ -46,7 +46,7 @@ type GameData = {
 	};
 };
 
-export default function SearchPage() {
+function SearchPageContent() {
 	const searchParams = useSearchParams();
 	const username = searchParams?.get('search') ?? '';
 
@@ -88,5 +88,13 @@ export default function SearchPage() {
 				</>
 			)}
 		</>
+	);
+}
+
+export default function SearchPage() {
+	return (
+		<Suspense fallback={<div>Loading...</div>}>
+			<SearchPageContent />
+		</Suspense>
 	);
 }
