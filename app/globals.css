@@ -193,10 +193,13 @@ tbody tr td {
 	border-radius: 1rem;
 }
 
-.user-info img,
-.user-info .avg-container {
+.user-info img {
 	width: 300px;
 	height: 300px;
+}
+
+.user-info img,
+.user-info .avg-container {
 	display: flex;
 	align-items: center;
 	margin: 0 10px 10px 10px;
