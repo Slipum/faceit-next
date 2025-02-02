@@ -2,6 +2,7 @@
 
 import { headers } from '@/constants';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 type MainProps = {
@@ -42,6 +43,11 @@ type UserData = {
 			skill_level: number;
 			region: string;
 			game_name: string;
+		};
+	};
+	platforms: {
+		steam: {
+			id64: string;
 		};
 	};
 };
@@ -141,7 +147,16 @@ export function Main({ username, setGames, setUserId }: MainProps) {
 								)}
 								<div className="avg-container">
 									<div id="average-kills">
-										<h1 className="username">{username}</h1>
+										<h1 className="username">
+											{username}
+											{data.platforms.steam.id64 && (
+												<Link
+													style={{ marginLeft: '10px' }}
+													href={`https://steamcommunity.com/profiles/${data.platforms.steam.id64}`}>
+													<i className="fa-brands fa-steam"></i>
+												</Link>
+											)}
+										</h1>
 										<div className="elo-container">
 											<h2>Current ELO: {data.games.cs2.faceit_elo}</h2>
 											<div className="current-elo">
