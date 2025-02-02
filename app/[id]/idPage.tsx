@@ -4,7 +4,7 @@ import { getIconMap, headers } from '@/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import PlayerAvatar from './PlayerAvatar';
+import Team from './Team';
 
 type MatchData = {
 	id: string;
@@ -182,21 +182,7 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 		if (s == 'sweden') return 'se';
 	}
 
-	function getLVL(lvl: number) {
-		if (lvl <= 500) return '1';
-		if (lvl <= 750) return '2';
-		if (lvl <= 900) return '3';
-		if (lvl <= 1050) return '4';
-		if (lvl <= 1200) return '5';
-		if (lvl <= 1350) return '6';
-		if (lvl <= 1530) return '7';
-		if (lvl <= 1750) return '8';
-		if (lvl <= 2000) return '9';
-		return '10';
-	}
-
 	const map = match.voting.map.pick[0].slice(3);
-	const rounds = matchStats?.i18.split('/');
 	return (
 		<div className="layout-match">
 			<Link href={`/profile?search=${back}`}>
@@ -207,85 +193,14 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 				<span>{new Date(match.finishedAt).toLocaleTimeString()}</span>
 			</div>
 			<div className="teams">
-				<div className="team-one">
-					{rounds && (
-						<h1
-							style={{
-								color: `${
-									Number(rounds[0]) > Number(rounds[1]) ? '#66bb6a' : '#ff4d4f'
-								}`,
-								padding: '5px',
-								margin: '5px',
-								width: 'fit-content',
-							}}>
-							{rounds[0]}
-						</h1>
-					)}
-					<div className="right r-container">
-						<Image
-							src={match.teams.faction1.avatar}
-							alt={'team1'}
-							width={100}
-							height={100}
-						/>
-						<h1>{match.teams.faction1.name}</h1>
-					</div>
-					<div className="players">
-						{match.teams.faction1.roster.map((player) => (
-							<div className="player" key={player.nickname}>
-								<Link href={`/profile?search=${player.nickname}`}>
-									<PlayerAvatar
-										avatar={player.avatar}
-										nickname={player.nickname}
-									/>
-									<div className="pl-cont">
-										<div className="player-container">
-											<div className="left">
-												<span>{player.nickname}</span>
-											</div>
-											<div className="right">
-												<span>{player.elo}</span>
-												<Image
-													src={`https://cdn-frontend.faceit-cdn.net/web/static/media/assets_images_skill-icons_skill_level_${getLVL(
-														player.elo,
-													)}_svg.svg`}
-													alt={getLVL(player.elo)}
-													width={32}
-													height={32}
-												/>
-											</div>
-										</div>
-										<div className="player-stats">
-											{matchStats &&
-												matchStats.teams[0].players
-													.filter((p) => player.nickname == p.nickname)
-													.map((p) => (
-														<table key={p.nickname}>
-															<thead>
-																<tr>
-																	<th>Kills</th>
-																	<th>K/D</th>
-																	<th>K/R</th>
-																	<th>ADR</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>{p.i6}</td>
-																	<td>{p.c2}</td>
-																	<td>{p.c3}</td>
-																	<td>{p.c10}</td>
-																</tr>
-															</tbody>
-														</table>
-													))}
-										</div>
-									</div>
-								</Link>
-							</div>
-						))}
-					</div>
-				</div>
+				{matchStats && (
+					<Team
+						rounds={matchStats.i18.split('/')}
+						team={match.teams.faction1}
+						players={matchStats.teams[0].players}
+						pos="left"
+					/>
+				)}
 				<div className="">
 					<h2 className="team-win">
 						Winner is{' '}
@@ -318,84 +233,14 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
 						<p>{map.charAt(0).toUpperCase() + map.slice(1)}</p>
 					</div>
 				</div>
-				<div className="team-two">
-					{rounds && (
-						<h1
-							style={{
-								color: `${
-									Number(rounds[1]) > Number(rounds[0]) ? '#66bb6a' : '#ff4d4f'
-								}`,
-								padding: '5px',
-								width: 'fit-content',
-							}}>
-							{rounds[1]}
-						</h1>
-					)}
-					<div className="left l-container">
-						<Image
-							src={match.teams.faction2.avatar}
-							alt={'team2'}
-							width={100}
-							height={100}
-						/>
-						<h1>{match.teams.faction2.name}</h1>
-					</div>
-					<div className="players">
-						{match.teams.faction2.roster.map((player) => (
-							<div className="player" key={player.nickname}>
-								<Link href={`/profile?search=${player.nickname}`}>
-									<PlayerAvatar
-										avatar={player.avatar}
-										nickname={player.nickname}
-									/>
-									<div className="pl-cont">
-										<div className="player-container">
-											<div className="left">
-												<span>{player.nickname}</span>
-											</div>
-											<div className="right">
-												<span>{player.elo}</span>
-												<Image
-													src={`https://cdn-frontend.faceit-cdn.net/web/static/media/assets_images_skill-icons_skill_level_${getLVL(
-														player.elo,
-													)}_svg.svg`}
-													alt={getLVL(player.elo)}
-													width={32}
-													height={32}
-												/>
-											</div>
-										</div>
-										<div className="player-stats">
-											{matchStats &&
-												matchStats.teams[1].players
-													.filter((p) => player.nickname == p.nickname)
-													.map((p) => (
-														<table key={p.nickname}>
-															<thead>
-																<tr>
-																	<th>Kills</th>
-																	<th>K/D</th>
-																	<th>K/R</th>
-																	<th>ADR</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>{p.i6}</td>
-																	<td>{p.c2}</td>
-																	<td>{p.c3}</td>
-																	<td>{p.c10}</td>
-																</tr>
-															</tbody>
-														</table>
-													))}
-										</div>
-									</div>
-								</Link>
-							</div>
-						))}
-					</div>
-				</div>
+				{matchStats && (
+					<Team
+						rounds={matchStats.i18.split('/')}
+						team={match.teams.faction2}
+						players={matchStats.teams[1].players}
+						pos="right"
+					/>
+				)}
 			</div>
 		</div>
 	);
