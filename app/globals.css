@@ -630,6 +630,31 @@ tbody tr td {
 	z-index: 9;
 }
 
+.tipTwo {
+	position: absolute;
+	background: #333;
+	color: #fff;
+	padding: 8px;
+	border-radius: 4px;
+	font-size: 12px;
+	max-width: 200px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	z-index: 9;
+}
+
+.tipOne {
+	position: absolute;
+	background: #333;
+	color: #fff;
+	padding: 8px;
+	border-radius: 4px;
+	font-size: 12px;
+	max-width: 200px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	z-index: 9;
+	right: 0;
+}
+
 .stat-bar-container {
 	background: #333;
 	border-radius: 4px;
@@ -815,6 +840,10 @@ tbody tr td {
 .right {
 	display: flex;
 	gap: 5px;
+}
+
+.right {
+	position: relative;
 }
 
 .left h1 {
