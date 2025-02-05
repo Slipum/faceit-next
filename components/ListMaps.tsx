@@ -245,7 +245,7 @@ export function ListMaps({
 				title: 'Win rate %',
 				value: totalWins,
 				change: totalWins - changeWins,
-				ranges: { red: [0, 39], yellow: [40, 52], green: [53, 100] },
+				ranges: { red: [0, 39], yellow: [40, 52], green: [53, 70] },
 			},
 			{
 				title: 'AVG kills',
@@ -257,25 +257,25 @@ export function ListMaps({
 				title: 'ADR',
 				value: totalADR,
 				change: Number((totalADR / 10 - changeADR / 100).toFixed(2)),
-				ranges: { red: [0, 60], yellow: [60.1, 75], green: [75.1, 100] },
+				ranges: { red: [0, 60], yellow: [60.1, 75], green: [75.1, 105] },
 			},
 			{
 				title: 'K/D',
 				value: totalKD,
 				change: Number((totalKD / 10 - changeKD / 100).toFixed(2)),
-				ranges: { red: [0, 0.79], yellow: [0.8, 1.09], green: [1.1, 2] },
+				ranges: { red: [0, 0.79], yellow: [0.8, 1.09], green: [1.1, 1.7] },
 			},
 			{
 				title: 'K/R',
 				value: totalKR,
 				change: Number((totalKR / 10 - changeKR / 100).toFixed(2)),
-				ranges: { red: [0, 0.5], yellow: [0.51, 0.75], green: [0.76, 2] },
+				ranges: { red: [0, 0.5], yellow: [0.51, 0.75], green: [0.76, 1.1] },
 			},
 			{
 				title: 'Headshot %',
 				value: totalHS,
 				change: Number((totalHS / 10 - changeHS / 100).toFixed(2)),
-				ranges: { red: [0, 39.99], yellow: [40, 62], green: [63, 100] },
+				ranges: { red: [0, 39.99], yellow: [40, 62], green: [63, 75] },
 			},
 		];
 
