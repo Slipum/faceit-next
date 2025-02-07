@@ -275,7 +275,7 @@ export function ListMaps({
 				title: 'Headshot %',
 				value: totalHS,
 				change: Number((totalHS / 10 - changeHS / 100).toFixed(2)),
-				ranges: { red: [0, 39.99], yellow: [40, 62], green: [63, 75] },
+				ranges: { red: [0, 39.99], yellow: [40, 62.99], green: [63, 75] },
 			},
 		];
 
