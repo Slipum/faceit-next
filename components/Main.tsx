@@ -9,6 +9,7 @@ type MainProps = {
 	username: string;
 	setGames: React.Dispatch<React.SetStateAction<GameData | undefined>>;
 	setUserId: React.Dispatch<React.SetStateAction<string>>;
+	comp?: number;
 };
 
 type GameData = {
@@ -52,7 +53,7 @@ type UserData = {
 	};
 };
 
-export function Main({ username, setGames, setUserId }: MainProps) {
+export function Main({ username, setGames, setUserId, comp = 0 }: MainProps) {
 	const [data, setData] = useState<UserData | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
@@ -116,7 +117,10 @@ export function Main({ username, setGames, setUserId }: MainProps) {
 		return (
 			<>
 				<div className="main-container">
-					<div id="main-c" className="main-info">
+					<div
+						id="main-c"
+						className="main-info"
+						style={{ width: `${comp == 0 ? '80%' : '100%'}` }}>
 						<div
 							id="user-back"
 							className="user-container"
@@ -172,6 +176,13 @@ export function Main({ username, setGames, setUserId }: MainProps) {
 									</div>
 								</div>
 							</div>
+							{comp == 0 && (
+								<Link
+									href={`/comp?player=${username}&with=`}
+									style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
+									<i className="fa-solid fa-code-compare fa-2xl"></i>
+								</Link>
+							)}
 						</div>
 						<hr />
 						<div id="country-list">
