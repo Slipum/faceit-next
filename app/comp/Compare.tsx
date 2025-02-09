@@ -78,17 +78,6 @@ export default function Compare({ first, second }: Props) {
 
 	const [players, setPlayers] = useState<Players>();
 
-	const compArr = [
-		{
-			title: 'MaxElo',
-			attribute: 'maxElo',
-		},
-		{
-			title: 'Winrate %',
-			attribute: 'winRate',
-		},
-	];
-
 	useEffect(() => {
 		const fetchMatches = async () => {
 			try {
@@ -249,8 +238,6 @@ export default function Compare({ first, second }: Props) {
 	if (!matches.length || !matchesT.length) {
 		return <></>;
 	}
-
-	console.log(players);
 
 	if (players) {
 		return (
