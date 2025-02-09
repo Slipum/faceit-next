@@ -971,5 +971,14 @@ tbody tr td {
 	height: 250%;
 	width: 10px;
 	transition: width 0.3s ease-in-out;
-	background-color: #c6c7c4;
+	background-color: #ffffff;
+}
+
+.comp-value {
+	width: 76px;
+	color: #f44336;
+}
+
+.comp-value.green {
+	color: #4caf50;
 }

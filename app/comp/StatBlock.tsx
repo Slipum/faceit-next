@@ -13,7 +13,9 @@ export default function StatBlock({
 		<>
 			<h3>{title}</h3>
 			<div className="sol-comp">
-				<div className="">{firstValue}</div>
+				<div className={`comp-value ${firstValue > secondValue && 'green'}`}>
+					{firstValue}
+				</div>
 				<div className="stat-bar-container">
 					<div
 						className={'bar comp'}
@@ -21,7 +23,9 @@ export default function StatBlock({
 							left: `${getBar(firstValue, secondValue)}%`,
 						}}></div>
 				</div>
-				<div className="">{secondValue}</div>
+				<div className={`comp-value ${firstValue < secondValue && 'green'}`}>
+					{secondValue}
+				</div>
 			</div>
 		</>
 	);
