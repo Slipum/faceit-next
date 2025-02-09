@@ -30,7 +30,6 @@ export default function ComparisonStatistic({
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				// Здесь должна быть логика загрузки данных
 				setProfile(player);
 				setComparedPlayer(compareWith);
 			} catch (err) {
