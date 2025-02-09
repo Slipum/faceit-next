@@ -52,7 +52,7 @@ export default function ComparisonStatistic({
 		if (evt.key === 'Enter' && inputRef.current) {
 			const username = inputRef.current.value.trim();
 			if (username) {
-				router.push(`/comp?player=s1mple&with=${username}`);
+				router.push(`/comp?player=${player}&with=${username}`);
 			}
 		}
 	};
