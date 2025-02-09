@@ -431,16 +431,16 @@ export function ListMaps({
 										<td>{match.kills}</td>
 										<td>{match.assists}</td>
 										<td>{match.deaths}</td>
-										<td className={getCellClass(match.kd, 1, 1.1, 0.8)}>
+										<td className={getCellClass(match.kd, 1.1, 0.8)}>
 											{match.kd}
 										</td>
-										<td className={getCellClass(match.kr, 0.75, 0.9, 0.5)}>
+										<td className={getCellClass(match.kr, 0.76, 0.51)}>
 											{match.kr}
 										</td>
-										<td className={getCellClass(match.hs, 62, 72, 40)}>
+										<td className={getCellClass(match.hs, 63, 40)}>
 											{match.hs}
 										</td>
-										<td className={getCellClass(match.adr, 60, 75, 50)}>
+										<td className={getCellClass(match.adr, 75, 60)}>
 											{match.adr}
 										</td>
 										<td>
@@ -525,10 +525,8 @@ function getCellClass(
 	value: number,
 	greenThreshold: number,
 	yelowThreshold: number,
-	redThreshold: number,
 ) {
-	if (value >= greenThreshold && value < yelowThreshold) return 'td-green';
-	if (value >= yelowThreshold) return 'td-solid-green';
-	if (value <= redThreshold) return 'td-solid-red';
-	return value > redThreshold && value < greenThreshold ? 'td-green' : 'td-red';
+	if (value >= greenThreshold) return 'td-solid-green';
+	if (value >= yelowThreshold) return 'td-yelow';
+	return 'td-solid-red';
 }

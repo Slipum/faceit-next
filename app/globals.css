@@ -410,16 +410,11 @@ tbody tr td {
 	color: #f6f4f4;
 }
 
-.td-red {
-	color: rgb(255, 207, 123);
-	font-weight: 700;
-}
-
 .td-tour {
 	color: #eca23a;
 }
 
-.td-green {
+.td-yelow {
 	color: rgb(255, 207, 123);
 	font-weight: 700;
 }
