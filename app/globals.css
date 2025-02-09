@@ -933,7 +933,43 @@ tbody tr td {
 }
 
 /* ---------- */
-/* 
-.mapWinnings {
-	width: 80%;
-} */
+
+.comp-wrapper {
+	margin-top: 3rem;
+	font-size: 24px;
+	margin-bottom: 10rem;
+}
+
+.comp-wrapper * {
+	margin: 0 auto;
+	width: fit-content;
+}
+
+.comp-wrapper .sol-comp {
+	display: flex;
+	gap: 2rem;
+}
+
+.sol-comp {
+	margin-bottom: 32px;
+}
+
+.sol-comp * {
+	margin: auto 0;
+}
+
+.sol-comp .stat-bar-container {
+	margin: auto 0;
+	width: 400px;
+	overflow: visible;
+	position: relative;
+}
+
+.bar {
+	position: absolute;
+	bottom: -75%;
+	height: 250%;
+	width: 10px;
+	transition: width 0.3s ease-in-out;
+	background-color: #c6c7c4;
+}
