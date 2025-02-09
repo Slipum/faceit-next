@@ -1,4 +1,8 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
+import Compare from './Compare';
 import ComparisonStatistic from './ComparisonStatistic';
 
 export default function CompPage({
@@ -6,6 +10,9 @@ export default function CompPage({
 }: {
 	searchParams: { player?: string; with?: string };
 }) {
+	const [first, setFirst] = useState<string>('');
+	const [second, setSecond] = useState<string>('');
+
 	return (
 		<>
 			<Link
@@ -16,7 +23,10 @@ export default function CompPage({
 			<ComparisonStatistic
 				player={searchParams?.player || ''}
 				compareWith={searchParams?.with || ''}
+				setFirst={setFirst}
+				setSecond={setSecond}
 			/>
+			<Compare first={first} second={second} />
 		</>
 	);
 }

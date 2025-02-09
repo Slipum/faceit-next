@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 type MainProps = {
 	username: string;
-	setGames: React.Dispatch<React.SetStateAction<GameData | undefined>>;
+	setGames?: React.Dispatch<React.SetStateAction<GameData | undefined>>;
 	setUserId: React.Dispatch<React.SetStateAction<string>>;
 	comp?: number;
 };
@@ -102,7 +102,7 @@ export function Main({ username, setGames, setUserId, comp = 0 }: MainProps) {
 	// ---
 
 	useEffect(() => {
-		if (data) {
+		if (data && setGames) {
 			setGames(data.games);
 		}
 	}, [data, setGames]);

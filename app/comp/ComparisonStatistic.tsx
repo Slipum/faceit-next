@@ -4,28 +4,19 @@ import { Main } from '@/components';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
-type GameData = {
-	cs2: {
-		faceit_elo: number;
-		skill_level: number;
-		region: string;
-		game_name: string;
-	};
-	csgo: {
-		faceit_elo: number;
-		skill_level: number;
-		region: string;
-		game_name: string;
-	};
+type CompProps = {
+	player: string;
+	compareWith: string;
+	setFirst: React.Dispatch<React.SetStateAction<string>>;
+	setSecond: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function ComparisonStatistic({
 	player,
 	compareWith,
-}: {
-	player: string;
-	compareWith: string;
-}) {
+	setFirst,
+	setSecond,
+}: CompProps) {
 	const [profile, setProfile] = useState<string>(player);
 	const [comparedPlayer, setComparedPlayer] = useState<string>(compareWith);
 	const [error, setError] = useState<string | null>(null);
@@ -33,10 +24,8 @@ export default function ComparisonStatistic({
 	const router = useRouter(); // Используем useRouter для навигации
 
 	const [userId, setUserId] = useState<string>('');
-	const [games, setGames] = useState<GameData | undefined>(undefined);
 
 	const [userIdT, setUserIdT] = useState<string>('');
-	const [gamesT, setGamesT] = useState<GameData | undefined>(undefined);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -51,10 +40,6 @@ export default function ComparisonStatistic({
 
 		fetchData();
 	}, [player, compareWith]);
-
-	if (error) {
-		return <></>;
-	}
 
 	// Очистка поля ввода
 	const handleClear = () => {
@@ -72,6 +57,18 @@ export default function ComparisonStatistic({
 			}
 		}
 	};
+
+	useEffect(() => {
+		setFirst(userId);
+	}, [userId, setFirst]);
+
+	useEffect(() => {
+		setSecond(userIdT);
+	}, [userIdT, setSecond]);
+
+	if (error) {
+		return <></>;
+	}
 
 	return (
 		<div style={{ width: '100%', margin: '0 auto' }}>
@@ -104,12 +101,7 @@ export default function ComparisonStatistic({
 								}}>
 								Main player: {profile || 'Не выбран'}
 							</h3>
-							<Main
-								username={profile}
-								setGames={setGames}
-								setUserId={setUserId}
-								comp={1}
-							/>
+							<Main username={profile} setUserId={setUserId} comp={1} />
 						</div>
 						<div
 							style={{
@@ -126,7 +118,6 @@ export default function ComparisonStatistic({
 								</h3>
 								<Main
 									username={comparedPlayer}
-									setGames={setGamesT}
 									setUserId={setUserIdT}
 									comp={1}
 								/>
@@ -142,7 +133,7 @@ export default function ComparisonStatistic({
 							<input
 								type="text"
 								id="username"
-								placeholder="Enter secound faceit username"
+								placeholder="Enter second faceit username"
 								autoComplete="off"
 								ref={inputRef}
 								onKeyDown={handleKeyDown}
