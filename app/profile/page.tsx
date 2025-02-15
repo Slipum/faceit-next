@@ -73,18 +73,22 @@ function SearchPageContent() {
 			{username && (
 				<>
 					<Main username={username} setGames={setGames} setUserId={setUserId} />
-					<Performance stats={stats} />
-					<Graph listElo={listElo} />
-					<AnotherStat games={games} />
-					<MapsWin winrate={winrate} qualityMap={qualityMap} arr={arr} />
-					<ListMaps
-						userId={userId}
-						setListElo={updateListElo}
-						setStats={setStats}
-						setWin={setWinrate}
-						setQual={setQualityMap}
-						setArr={setArr}
-					/>
+					{games && games.cs2 && (
+						<>
+							<Performance stats={stats} />
+							<Graph listElo={listElo} />
+							<AnotherStat games={games} />
+							<MapsWin winrate={winrate} qualityMap={qualityMap} arr={arr} />
+							<ListMaps
+								userId={userId}
+								setListElo={updateListElo}
+								setStats={setStats}
+								setWin={setWinrate}
+								setQual={setQualityMap}
+								setArr={setArr}
+							/>
+						</>
+					)}
 				</>
 			)}
 		</>

@@ -80,7 +80,7 @@ export function Main({ username, setGames, setUserId, comp = 0 }: MainProps) {
 
 				if (!response.ok) {
 					throw new Error(
-						`Ошибка сети: ${response.status} - ${response.statusText}`,
+						`Network error: ${response.status} - ${response.statusText}`,
 					);
 				}
 

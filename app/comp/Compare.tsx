@@ -138,7 +138,7 @@ export default function Compare({ first, second }: Props) {
 
 				setMatchesT(formattedMatchesT);
 			} catch (err) {
-				setError(err instanceof Error ? err.message : 'Произошла ошибка');
+				setError(err instanceof Error ? err.message : "There's been an error");
 			} finally {
 				setIsLoading(false);
 			}
@@ -228,11 +228,11 @@ export default function Compare({ first, second }: Props) {
 	}, [matches, matchesT]);
 
 	if (isLoading) {
-		return <p>Загрузка...</p>;
+		return <p>Loading...</p>;
 	}
 
 	if (error) {
-		return <p>Ошибка: {error}</p>;
+		return <p>Error: {error}</p>;
 	}
 
 	if (!matches.length || !matchesT.length) {

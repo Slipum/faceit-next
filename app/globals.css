@@ -977,3 +977,45 @@ tbody tr td {
 .comp-value.green {
 	color: #4caf50;
 }
+
+.search-wr {
+	position: absolute;
+	top: 80px;
+	width: 200px;
+	max-width: 400px;
+	padding: 10px 20px;
+	gap: 10px;
+	background-color: rgba(60, 60, 60, 0.5);
+	border-radius: 15px;
+}
+
+.search-value:hover {
+	background-color: rgba(33, 32, 32, 1);
+	border-radius: 10px;
+}
+
+.search-wr div {
+	position: relative;
+}
+
+.search-wr a:last-child .search-value {
+	margin-bottom: 0;
+}
+
+.search-value {
+	display: flex;
+	margin-bottom: 10px;
+}
+
+.search-value img {
+	border-radius: 5px;
+}
+
+.search-value p {
+	align-content: center;
+}
+
+.parent-header {
+	display: flex;
+	justify-content: center;
+}

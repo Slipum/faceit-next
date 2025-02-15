@@ -111,9 +111,7 @@ export function ListMaps({
 				);
 
 				if (!response.ok) {
-					throw new Error(
-						`Ошибка: ${response.status} - ${response.statusText}`,
-					);
+					throw new Error(`Error: ${response.status} - ${response.statusText}`);
 				}
 
 				const data = await response.json();
@@ -141,7 +139,7 @@ export function ListMaps({
 					.reverse();
 				setListElo(eloList);
 			} catch (err) {
-				setError(err instanceof Error ? err.message : 'Произошла ошибка');
+				setError(err instanceof Error ? err.message : 'Error');
 			} finally {
 				setIsLoading(false);
 			}
@@ -286,11 +284,11 @@ export function ListMaps({
 	}, [matches, setStats, setWin, setQual, setArr]);
 
 	if (isLoading) {
-		return <p>Загрузка...</p>;
+		return <p>Loading...</p>;
 	}
 
 	if (error) {
-		return <p>Ошибка: {error}</p>;
+		return <p>Error: {error}</p>;
 	}
 
 	if (!matches.length) {
