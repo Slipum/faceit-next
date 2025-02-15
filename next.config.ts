@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
 				protocol: 'https',
 				hostname: 'tiermaker.com',
 			},
+			{
+				protocol: 'https',
+				hostname: 'd50m6q67g4bn3.cloudfront.net',
+			},
 		],
 	},
 };

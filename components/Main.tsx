@@ -17,40 +17,36 @@ type GameData = {
 		faceit_elo: number;
 		skill_level: number;
 		region: string;
-		game_name: string;
+		game_player_name: string;
 	};
 	csgo: {
 		faceit_elo: number;
 		skill_level: number;
 		region: string;
-		game_name: string;
+		game_player_name: string;
 	};
 };
 
 type UserData = {
-	cover_image_url: string;
+	cover_image: string;
 	country: string;
 	avatar: string;
-	id: string;
+	player_id: string;
 	games: {
 		cs2: {
 			faceit_elo: number;
 			skill_level: number;
 			region: string;
-			game_name: string;
+			game_player_name: string;
 		};
 		csgo: {
 			faceit_elo: number;
 			skill_level: number;
 			region: string;
-			game_name: string;
+			game_player_name: string;
 		};
 	};
-	platforms: {
-		steam: {
-			id64: string;
-		};
-	};
+	steam_id_64: string;
 };
 
 export function Main({ username, setGames, setUserId, comp = 0 }: MainProps) {
@@ -63,15 +59,8 @@ export function Main({ username, setGames, setUserId, comp = 0 }: MainProps) {
 			try {
 				if (!username) return;
 
-				const baseURL = 'https://www.faceit.com/ru/players/';
-				let cleanUsername = username;
-				if (cleanUsername.startsWith(baseURL)) {
-					cleanUsername = cleanUsername.replace(baseURL, '');
-				}
-
-				const url = `https://www.faceit.com/api/users/v1/nicknames/${cleanUsername}`;
 				const response = await fetch(
-					`/api/proxy?url=${encodeURIComponent(url)}`,
+					`/api/faceit?url=players?nickname=${username}`,
 					{
 						method: 'GET',
 						headers: headers,
@@ -83,9 +72,8 @@ export function Main({ username, setGames, setUserId, comp = 0 }: MainProps) {
 						`Network error: ${response.status} - ${response.statusText}`,
 					);
 				}
-
 				const result = await response.json();
-				setData(result.payload);
+				setData(result);
 			} catch (err: unknown) {
 				if (err instanceof Error) {
 					setError(err.message);
@@ -109,7 +97,7 @@ export function Main({ username, setGames, setUserId, comp = 0 }: MainProps) {
 
 	useEffect(() => {
 		if (data) {
-			setUserId(data.id);
+			setUserId(data.player_id);
 		}
 	}, [data, setUserId]);
 
@@ -125,7 +113,7 @@ export function Main({ username, setGames, setUserId, comp = 0 }: MainProps) {
 							id="user-back"
 							className="user-container"
 							style={{
-								backgroundImage: `url("${data.cover_image_url}")`,
+								backgroundImage: `url("${data.cover_image}")`,
 								backgroundRepeat: 'no-repeat',
 								backgroundSize: 'cover',
 								backgroundPosition: 'center center',
@@ -153,10 +141,10 @@ export function Main({ username, setGames, setUserId, comp = 0 }: MainProps) {
 									<div id="average-kills">
 										<h1 className="username">
 											{username}
-											{data.platforms.steam.id64 && (
+											{data.steam_id_64 && (
 												<Link
 													style={{ marginLeft: '10px' }}
-													href={`https://steamcommunity.com/profiles/${data.platforms.steam.id64}`}>
+													href={`https://steamcommunity.com/profiles/${data.steam_id_64}`}>
 													<i className="fa-brands fa-steam"></i>
 												</Link>
 											)}

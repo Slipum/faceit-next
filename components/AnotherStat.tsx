@@ -9,13 +9,13 @@ type GameData = {
 		faceit_elo: number;
 		skill_level: number;
 		region: string;
-		game_name: string;
+		game_player_name: string;
 	};
 	csgo: {
 		faceit_elo: number;
 		skill_level: number;
 		region: string;
-		game_name: string;
+		game_player_name: string;
 	};
 };
 
@@ -29,7 +29,7 @@ export function AnotherStat({ games }: AnotherStatProps) {
 	) => (
 		<div className="game-info">
 			<h2>{title}</h2>
-			<p>Steam Name: {game.game_name}</p>
+			<p>Steam Name: {game.game_player_name}</p>
 			<p>Faceit Elo: {game.faceit_elo}</p>
 			<p>
 				Region:{' '}

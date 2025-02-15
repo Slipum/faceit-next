@@ -36,13 +36,13 @@ type GameData = {
 		faceit_elo: number;
 		skill_level: number;
 		region: string;
-		game_name: string;
+		game_player_name: string;
 	};
 	csgo: {
 		faceit_elo: number;
 		skill_level: number;
 		region: string;
-		game_name: string;
+		game_player_name: string;
 	};
 };
 
@@ -73,22 +73,22 @@ function SearchPageContent() {
 			{username && (
 				<>
 					<Main username={username} setGames={setGames} setUserId={setUserId} />
-					{games && games.cs2 && (
-						<>
-							<Performance stats={stats} />
-							<Graph listElo={listElo} />
-							<AnotherStat games={games} />
-							<MapsWin winrate={winrate} qualityMap={qualityMap} arr={arr} />
-							<ListMaps
-								userId={userId}
-								setListElo={updateListElo}
-								setStats={setStats}
-								setWin={setWinrate}
-								setQual={setQualityMap}
-								setArr={setArr}
-							/>
-						</>
-					)}
+					{/* {games && games.cs2 && (
+						<> */}
+					<Performance stats={stats} />
+					<Graph listElo={listElo} />
+					<AnotherStat games={games} />
+					<MapsWin winrate={winrate} qualityMap={qualityMap} arr={arr} />
+					<ListMaps
+						userId={userId}
+						setListElo={updateListElo}
+						setStats={setStats}
+						setWin={setWinrate}
+						setQual={setQualityMap}
+						setArr={setArr}
+					/>
+					{/* </>
+					)} */}
 				</>
 			)}
 		</>
