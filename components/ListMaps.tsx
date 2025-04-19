@@ -430,15 +430,16 @@ export function ListMaps({
 										<td>{match.assists}</td>
 										<td>{match.deaths}</td>
 										<td className={getCellClass(match.kd, 1.1, 0.8)}>
-											{match.kd}
+											<i className={`${getFire(match.kd, 2)}`}></i> {match.kd}
 										</td>
 										<td className={getCellClass(match.kr, 0.76, 0.51)}>
-											{match.kr}
+											<i className={`${getFire(match.kr, 1.2)}`}></i> {match.kr}
 										</td>
 										<td className={getCellClass(match.hs, 63, 40)}>
-											{match.hs}
+											<i className={`${getFire(match.hs, 72)}`}></i> {match.hs}
 										</td>
 										<td className={getCellClass(match.adr, 75, 60)}>
+											<i className={`${getFire(match.adr, 110)}`}></i>{' '}
 											{match.adr}
 										</td>
 										<td>
@@ -527,4 +528,9 @@ function getCellClass(
 	if (value >= greenThreshold) return 'td-solid-green';
 	if (value >= yelowThreshold) return 'td-yelow';
 	return 'td-solid-red';
+}
+
+function getFire(value: number, fire: number) {
+	if (value >= fire) return 'fa-solid fa-fire';
+	return '';
 }

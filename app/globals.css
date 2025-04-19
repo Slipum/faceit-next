@@ -1019,3 +1019,7 @@ tbody tr td {
 	display: flex;
 	justify-content: center;
 }
+
+.fa-fire {
+	color: #ff9226;
+}
