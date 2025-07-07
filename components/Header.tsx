@@ -57,9 +57,7 @@ export function Header() {
 					);
 
 					if (!response.ok) {
-						throw new Error(
-							`Error: ${response.status} - ${response.statusText}`,
-						);
+						throw new Error(`Error: ${response.status} - ${response.statusText}`);
 					}
 					const data = await response.json();
 					setPlayers(data);
@@ -141,10 +139,7 @@ export function Header() {
 					</div>
 				</div>
 				<div className="h-auth">
-					<Link
-						className="github"
-						href="https://github.com/Slipum/faceit-next"
-						target="_blank">
+					<Link className="github" href="https://github.com/Slipum/faceit-next" target="_blank">
 						<i className="fa-brands fa-github"></i>
 					</Link>
 				</div>
@@ -157,14 +152,9 @@ export function Header() {
 								<Link
 									key={player.player_id}
 									href={`/profile?search=${player.nickname}`}
-									onClick={() =>
-										router.push(`/profile?search=${player.nickname}`)
-									}>
+									onClick={() => router.push(`/profile?search=${player.nickname}`)}>
 									<div className="search-value">
-										<PlayerAvaSearch
-											avatar={player.avatar}
-											nickname={player.nickname}
-										/>
+										<PlayerAvaSearch avatar={player.avatar} nickname={player.nickname} />
 										<p>{player.nickname}</p>
 									</div>
 								</Link>
