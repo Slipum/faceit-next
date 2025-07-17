@@ -52,21 +52,23 @@ export function getIconMap(map: string): string {
 
 const maps: MapIcons = {
 	de_mirage:
-		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-d16a1e0029.png',
+		'https://tiermaker.com/images/media/template_images/2024/17380318/counter-strike-2--cs2---csgo--maps-17380318/mirage.png',
 	de_vertigo:
 		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-60355f0c79.png',
 	de_ancient:
-		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-2dd5e0fa43.png',
+		'https://tiermaker.com/images/media/template_images/2024/17380318/counter-strike-2--cs2---csgo--maps-17380318/ancient.png',
 	de_dust2:
-		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-e3a439ea61.png',
+		'https://tiermaker.com/images/media/template_images/2024/17380318/counter-strike-2--cs2---csgo--maps-17380318/dust-2.png',
 	de_anubis:
 		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-5287fdc954.png',
 	de_nuke:
-		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-60bb2b8bb4.png',
+		'https://tiermaker.com/images/media/template_images/2024/17380318/counter-strike-2--cs2---csgo--maps-17380318/nuke.png',
 	de_inferno:
-		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-4505fb0e5f.png',
+		'https://tiermaker.com/images/media/template_images/2024/17380318/counter-strike-2--cs2---csgo--maps-17380318/inferno.png',
 	de_train:
-		'https://tiermaker.com/images/template_images/2022/15381016/counter-strike-map-icons-15381016/ezgif-5-ef700a97ce.png',
+		'https://tiermaker.com/images/media/template_images/2024/17380318/counter-strike-2--cs2---csgo--maps-17380318/train.png',
+	de_overpass:
+		'https://tiermaker.com/images/media/template_images/2024/17380318/counter-strike-2--cs2---csgo--maps-17380318/overpass.png',
 };
 export function getLogoMap(map: string): string {
 	return maps[map];

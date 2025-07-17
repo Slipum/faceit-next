@@ -68,8 +68,9 @@ export function MapsWin({ arr, winrate, qualityMap }: mapsProps) {
 									</span>
 								</div>
 								<div className="logo-map-container">
-									<p style={mapKey == 'de_ancient' ? { paddingBottom: '0.394rem' } : {}}>
+									<p>
 										<Image
+											style={mapKey == 'de_dust2' ? { width: 'auto' } : {}}
 											className="logo-map"
 											src={getLogoMap(mapKey) || ''}
 											alt="map"
