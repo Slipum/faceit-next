@@ -4,8 +4,7 @@ export const headers = {
 	'faceit-referer': 'new-frontend',
 	priority: 'u=1, i',
 	referer: 'https://www.faceit.com/ru/players/s1mle/stats/cs2',
-	'sec-ch-ua':
-		'"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
+	'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"',
 	'sec-ch-ua-mobile': '?0',
 	'sec-ch-ua-platform': '"Windows"',
 	'sec-fetch-dest': 'empty',
@@ -25,6 +24,8 @@ const mapIcons: MapIcons = {
 		'https://assets.faceit-cdn.net/third_party/games/ce652bd4-0abb-4c90-9936-1133965ca38b/assets/votables/7fb7d725-e44d-4e3c-b557-e1d19b260ab8_1695819144685.jpeg',
 	de_vertigo:
 		'https://assets.faceit-cdn.net/third_party/games/ce652bd4-0abb-4c90-9936-1133965ca38b/assets/votables/3bf25224-baee-44c2-bcd4-f1f72d0bbc76_1695819180008.jpeg',
+	de_overpass:
+		'https://distribution.faceit-cdn.net/images/8ba6f730-fa31-4dd7-9b41-4cff81d79fef.jpeg',
 	de_ancient:
 		'https://assets.faceit-cdn.net/third_party/games/ce652bd4-0abb-4c90-9936-1133965ca38b/assets/votables/5b844241-5b15-45bf-a304-ad6df63b5ce5_1695819190976.jpeg',
 	de_dust2:

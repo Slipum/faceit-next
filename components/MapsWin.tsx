@@ -15,18 +15,13 @@ type mapsProps = {
 	arr: rec;
 };
 
-const calculateWinRate = (
-	map: string,
-	winrate: winRate,
-	qualityMap: winRate,
-) => {
+const calculateWinRate = (map: string, winrate: winRate, qualityMap: winRate) => {
 	const wins = winrate[map] || 0;
 	const qual = qualityMap[map] || 1;
 	const rate: number = (wins / qual) * 100;
 	return {
 		value: parseFloat(rate.toFixed(1)),
-		color:
-			rate > 50 ? 'rgb(56, 199, 89)' : rate > 35 ? 'rgb(255, 207, 123)' : 'red',
+		color: rate > 50 ? 'rgb(56, 199, 89)' : rate > 35 ? 'rgb(255, 207, 123)' : 'red',
 	};
 };
 
@@ -36,7 +31,7 @@ export function MapsWin({ arr, winrate, qualityMap }: mapsProps) {
 		// 'de_vertigo', // убрал из прогрузки статы за эту карту
 		'de_ancient',
 		'de_dust2',
-		'de_anubis',
+		'de_overpass', // заменили anubis на overpass
 		'de_nuke',
 		'de_inferno',
 		'de_train',
@@ -61,9 +56,7 @@ export function MapsWin({ arr, winrate, qualityMap }: mapsProps) {
 									)}`,
 								}}>
 								<div className="winrate-title" style={{ width: '100%' }}>
-									<span style={{ color: `${winRateData.color}` }}>
-										{winRateData.value}
-									</span>
+									<span style={{ color: `${winRateData.color}` }}>{winRateData.value}</span>
 									<span
 										style={{
 											display: 'inline-block',
@@ -75,12 +68,7 @@ export function MapsWin({ arr, winrate, qualityMap }: mapsProps) {
 									</span>
 								</div>
 								<div className="logo-map-container">
-									<p
-										style={
-											mapKey == 'de_ancient'
-												? { paddingBottom: '0.394rem' }
-												: {}
-										}>
+									<p style={mapKey == 'de_ancient' ? { paddingBottom: '0.394rem' } : {}}>
 										<Image
 											className="logo-map"
 											src={getLogoMap(mapKey) || ''}
@@ -92,9 +80,7 @@ export function MapsWin({ arr, winrate, qualityMap }: mapsProps) {
 									<span>{mapKey.replace('de_', '').toUpperCase()}</span>
 								</div>
 								<div>
-									<span style={{ display: 'inline-block', width: '100%' }}>
-										Recent results
-									</span>
+									<span style={{ display: 'inline-block', width: '100%' }}>Recent results</span>
 									{arr[mapKey] &&
 										arr[mapKey].split('').map((char, index) => (
 											<div

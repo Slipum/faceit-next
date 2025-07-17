@@ -66,14 +66,7 @@ type ListMapsProps = {
 	setArr: (qual: rec) => void;
 };
 
-export function ListMaps({
-	userId,
-	setListElo,
-	setStats,
-	setWin,
-	setQual,
-	setArr,
-}: ListMapsProps) {
+export function ListMaps({ userId, setListElo, setStats, setWin, setQual, setArr }: ListMapsProps) {
 	const [matches, setMatches] = useState<MatchData[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
@@ -170,6 +163,7 @@ export function ListMaps({
 			de_vertigo: 0,
 			de_ancient: 0,
 			de_dust2: 0,
+			de_overpass: 0,
 			de_anubis: 0,
 			de_nuke: 0,
 			de_inferno: 0,
@@ -181,6 +175,7 @@ export function ListMaps({
 			de_vertigo: 0,
 			de_ancient: 0,
 			de_dust2: 0,
+			de_overpass: 0,
 			de_anubis: 0,
 			de_nuke: 0,
 			de_inferno: 0,
@@ -192,6 +187,7 @@ export function ListMaps({
 			de_vertigo: '',
 			de_ancient: '',
 			de_dust2: '',
+			de_overpass: '',
 			de_anubis: '',
 			de_nuke: '',
 			de_inferno: '',
@@ -206,20 +202,14 @@ export function ListMaps({
 			changeHS += Number(match.hs);
 			mC[match.map] += 1;
 			if (index < 99) {
-				if (
-					matches[index + 1] &&
-					Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0
-				) {
+				if (matches[index + 1] && Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) {
 					changeWins += 1;
 					mW[match.map] += 1;
 				}
 			}
 
 			if (Arc[match.map].length < 3) {
-				if (
-					matches[index + 1] &&
-					Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0
-				) {
+				if (matches[index + 1] && Number(getEloChange(match.elo, matches[index + 1].elo, 1)) > 0) {
 					Arc[match.map] += '1';
 				} else {
 					Arc[match.map] += '0';
@@ -301,13 +291,8 @@ export function ListMaps({
 			maxElo = match.elo;
 		}
 
-		if (
-			new Date(matches[0].date).toDateString() ==
-			new Date(match.date).toDateString()
-		) {
-			lastSessionElo += Number(
-				getEloChange(match.elo, matches[index + 1].elo, 1),
-			);
+		if (new Date(matches[0].date).toDateString() == new Date(match.date).toDateString()) {
+			lastSessionElo += Number(getEloChange(match.elo, matches[index + 1].elo, 1));
 
 			if (match.team.includes('team_')) {
 				totalMatchesToday += 1;
@@ -335,21 +320,17 @@ export function ListMaps({
 								<th>Date</th>
 								<th>
 									Map
-									<span
-										onClick={() => setIsOpen(!isOpen)}
-										className="filter-button">
+									<span onClick={() => setIsOpen(!isOpen)} className="filter-button">
 										<i className="fa-solid fa-filter"></i>
 									</span>
 									{isOpen && (
 										<div
-											className={`dropdown-filter  ${
-												filteredMatches.length != 0 ? 'f-1' : 'f-2'
-											}`}>
+											className={`dropdown-filter  ${filteredMatches.length != 0 ? 'f-1' : 'f-2'}`}>
 											{[
 												'de_mirage',
 												'de_ancient',
 												'de_dust2',
-												'de_anubis',
+												'de_overpass',
 												'de_nuke',
 												'de_inferno',
 												'de_train',
@@ -418,12 +399,7 @@ export function ListMaps({
 											</p>
 										</td>
 										<td>
-											<Image
-												src={getIconMap(match.map)}
-												alt={match.map}
-												width={70}
-												height={35}
-											/>
+											<Image src={getIconMap(match.map)} alt={match.map} width={70} height={35} />
 										</td>
 										<td>{match.score}</td>
 										<td>{match.kills}</td>
@@ -439,8 +415,7 @@ export function ListMaps({
 											<i className={`${getFire(match.hs, 72)}`}></i> {match.hs}
 										</td>
 										<td className={getCellClass(match.adr, 75, 60)}>
-											<i className={`${getFire(match.adr, 110)}`}></i>{' '}
-											{match.adr}
+											<i className={`${getFire(match.adr, 110)}`}></i> {match.adr}
 										</td>
 										<td>
 											{index < matches.length - 1 && match.elo !== 0 ? (
@@ -497,22 +472,16 @@ function getEloChange(currentElo: number, previousElo: number, i?: number) {
 	} else {
 		if (eloChange > 500) {
 			return (
-				<span
-					style={{ display: 'inline-flex', gap: '5px' }}
-					className="td-tour">
+				<span style={{ display: 'inline-flex', gap: '5px' }} className="td-tour">
 					{currentElo} (—)
-					<div
-						style={{ backgroundColor: '#eca23a', color: '#fff' }}
-						className="result-indicator">
+					<div style={{ backgroundColor: '#eca23a', color: '#fff' }} className="result-indicator">
 						T
 					</div>
 				</span>
 			);
 		}
 		return (
-			<span
-				style={{ display: 'inline-flex', gap: '5px' }}
-				className={changeClass}>
+			<span style={{ display: 'inline-flex', gap: '5px' }} className={changeClass}>
 				{currentElo}
 				{changeText}
 			</span>
@@ -520,11 +489,7 @@ function getEloChange(currentElo: number, previousElo: number, i?: number) {
 	}
 }
 
-function getCellClass(
-	value: number,
-	greenThreshold: number,
-	yelowThreshold: number,
-) {
+function getCellClass(value: number, greenThreshold: number, yelowThreshold: number) {
 	if (value >= greenThreshold) return 'td-solid-green';
 	if (value >= yelowThreshold) return 'td-yelow';
 	return 'td-solid-red';
