@@ -57,6 +57,7 @@ function SearchPageContent() {
   const [winrate, setWinrate] = useState<winRate>({});
   const [qualityMap, setQualityMap] = useState<winRate>({});
   const [arr, setArr] = useState<rec>({});
+  const [switcher, setSwitcher] = useState<boolean>(false);
 
   const updateListElo = useCallback(
     (elo: number[]) => {
@@ -73,12 +74,29 @@ function SearchPageContent() {
       {username && (
         <>
           <Main username={username} setGames={setGames} setUserId={setUserId} />
-          {/* {games && games.cs2 && (
-						<> */}
           <Performance stats={stats} />
           <Graph listElo={listElo} />
-          <AnotherStat games={games} />
-          <MapsWin winrate={winrate} qualityMap={qualityMap} arr={arr} />
+          <div className="btn-switch">
+            <div className="switcher">
+              <span
+                onClick={() => setSwitcher(false)}
+                className={`${!switcher && "pointer"}`}
+              >
+                Map Wins
+              </span>
+              <span
+                onClick={() => setSwitcher(true)}
+                className={`${switcher && "pointer"}`}
+              >
+                Another games
+              </span>
+            </div>
+          </div>
+          {switcher ? (
+            <AnotherStat games={games} />
+          ) : (
+            <MapsWin winrate={winrate} qualityMap={qualityMap} arr={arr} />
+          )}
           <ListMaps
             userId={userId}
             setListElo={updateListElo}
@@ -87,8 +105,6 @@ function SearchPageContent() {
             setQual={setQualityMap}
             setArr={setArr}
           />
-          {/* </>
-					)} */}
         </>
       )}
     </>

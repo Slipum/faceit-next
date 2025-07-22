@@ -44,9 +44,6 @@ export function MapsWin({ arr, winrate, qualityMap }: mapsProps) {
 
   return (
     <div className="mapWinnings">
-      <h3 id="title-maps-winning" className="title-all">
-        Map Wins
-      </h3>
       <div className="maps-winning-container">
         <div id="maps-winnings">
           {maps.map((mapKey: string) => {

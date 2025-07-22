@@ -29,31 +29,30 @@ export function AnotherStat({ games }: AnotherStatProps) {
   ) => (
     <div className="game-info">
       <h2>{title}</h2>
-      <p>Steam Name: {game.game_player_name}</p>
-      <p>Faceit Elo: {game.faceit_elo}</p>
-      <p>
-        Region:{" "}
-        {game.region === "EU" ? (
-          <i className={`fi fi-${game.region.toLowerCase()}`}></i>
-        ) : null}{" "}
-        {game.region}
-      </p>
-      <p>
-        Skill Level:{" "}
-        <Image
-          src={`https://cdn-frontend.faceit-cdn.net/web/static/media/assets_images_skill-icons_skill_level_${game.skill_level}_svg.svg`}
-          alt="Skill level icon"
-          width={35.2}
-          height={35.2}
-        />
-      </p>
+      <div className="spaced">
+        <p>Steam Name: {game.game_player_name}</p>
+        <p>Faceit Elo: {game.faceit_elo}</p>
+        <p>
+          Region:{" "}
+          {game.region === "EU" ? (
+            <i className={`fi fi-${game.region.toLowerCase()}`}></i>
+          ) : null}{" "}
+          {game.region}
+        </p>
+        <p>
+          Skill Level:{" "}
+          <Image
+            src={`https://cdn-frontend.faceit-cdn.net/web/static/media/assets_images_skill-icons_skill_level_${game.skill_level}_svg.svg`}
+            alt="Skill level icon"
+            width={35.2}
+            height={35.2}
+          />
+        </p>
+      </div>
     </div>
   );
   return (
     <>
-      <h3 id="title-All-games" className="title-all">
-        Another statistic
-      </h3>
       <div className="games-container">
         <div id="games">
           {renderGameInfo(games.cs2, "CS2 Statistics")}

@@ -27,10 +27,6 @@ export function Header() {
   const [error, setError] = useState<string | null>(null);
   const [debouncedValue, setDebouncedValue] = useState<string>("");
 
-  // useClickAway(inputRef, () => {
-  // 	setFocused(false);
-  // });
-
   useClickAway(searchWrapperRef, () => {
     setFocused(false);
   });
@@ -98,19 +94,11 @@ export function Header() {
     <div className="parent-header" ref={searchWrapperRef}>
       <header className="header-container">
         <div className="h-logo">
-          <Link href="/" style={{ display: "flex" }}>
-            <h1>
-              <i className="fa-solid fa-chart-simple"></i> Faceit-Next
+          <Link href="/" style={{ display: "flex", gap: "5px" }}>
+            <h1 style={{ padding: "5px 10px" }}>
+              <i className="fa-solid fa-chart-simple"></i>{" "}
+              <span>Faceit-Next</span>
             </h1>
-            <p
-              style={{
-                fontSize: "24px",
-                padding: "10px 20px",
-                fontWeight: "700",
-              }}
-            >
-              for
-            </p>
             <Image
               style={{ width: "50px", height: "auto" }}
               priority
