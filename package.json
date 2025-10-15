@@ -8,9 +8,16 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier . --write",
+    "prettier:check": "prettier . --check",
     "test": "jest --config ./jest.config.js",
     "test:watch": "jest --watch --config ./jest.config.js",
-    "test:coverage": "jest --coverage --config ./jest.config.js"
+    "test:coverage": "jest --coverage --config ./jest.config.js",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css,md,json}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "axios": "^1.7.8",
@@ -32,10 +39,14 @@
     "@types/react-dom": "^19.2.2",
     "eslint": "^8",
     "eslint-config-next": "^15.5.5",
+    "eslint-plugin-jest-dom": "^5.5.0",
+    "eslint-plugin-testing-library": "^7.13.3",
+    "husky": "^9.1.7",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "jest-fetch-mock": "^3.0.3",
+    "lint-staged": "^16.2.4",
     "prettier": "3.6.2",
     "ts-jest": "^29.4.5",
     "typescript": "^5",
