@@ -330,6 +330,31 @@ export function ListMaps({
         lastSessionElo={lastSessionElo}
       />
       <div className="matches-container">
+        {isOpen && (
+          <div
+            className={`dropdown-filter  ${filteredMatches.length != 0 ? "f-1" : "f-2"}`}
+          >
+            {[
+              "de_mirage",
+              "de_ancient",
+              "de_dust2",
+              "de_overpass",
+              "de_nuke",
+              "de_inferno",
+              "de_train",
+              "de_anubis",
+            ].map((map) => (
+              <label key={map} className="dropdown-item">
+                <input
+                  type="checkbox"
+                  checked={selectedMaps.includes(map)}
+                  onChange={() => handleMapFilterChange(map)}
+                />
+                {map.replace("de_", "").toUpperCase()}
+              </label>
+            ))}
+          </div>
+        )}
         <div id="matches">
           <table>
             <thead>
@@ -344,30 +369,6 @@ export function ListMaps({
                   >
                     <i className="fa-solid fa-filter"></i>
                   </span>
-                  {isOpen && (
-                    <div
-                      className={`dropdown-filter  ${filteredMatches.length != 0 ? "f-1" : "f-2"}`}
-                    >
-                      {[
-                        "de_mirage",
-                        "de_ancient",
-                        "de_dust2",
-                        "de_overpass",
-                        "de_nuke",
-                        "de_inferno",
-                        "de_train",
-                      ].map((map) => (
-                        <label key={map} className="dropdown-item">
-                          <input
-                            type="checkbox"
-                            checked={selectedMaps.includes(map)}
-                            onChange={() => handleMapFilterChange(map)}
-                          />
-                          {map.replace("de_", "").toUpperCase()}
-                        </label>
-                      ))}
-                    </div>
-                  )}
                 </th>
                 <th>Score</th>
                 <th>Kills</th>
@@ -385,7 +386,7 @@ export function ListMaps({
                 const count = 100 - index;
                 return (
                   <tr key={match.date}>
-                    <td>
+                    <td className="match-id">
                       {day == new Date(match.date).toDateString() ? (
                         <>
                           <i
@@ -412,7 +413,7 @@ export function ListMaps({
                         ></i>
                       </Link>
                     </td>
-                    <td>
+                    <td className="match-date">
                       {new Date(match.date).toLocaleDateString()}
                       <p>
                         (
@@ -423,7 +424,7 @@ export function ListMaps({
                         )
                       </p>
                     </td>
-                    <td>
+                    <td className="match-map">
                       <Image
                         src={getIconMap(match.map)}
                         alt={match.map}
@@ -431,24 +432,32 @@ export function ListMaps({
                         height={35}
                       />
                     </td>
-                    <td>{match.score}</td>
-                    <td>{match.kills}</td>
-                    <td>{match.assists}</td>
-                    <td>{match.deaths}</td>
-                    <td className={getCellClass(match.kd, 1.1, 0.8)}>
+                    <td className="match-score">{match.score}</td>
+                    <td className="match-kills">{match.kills}</td>
+                    <td className="match-assists">{match.assists}</td>
+                    <td className="match-deaths">{match.deaths}</td>
+                    <td
+                      className={`match-kd ${getCellClass(match.kd, 1.1, 0.8)}`}
+                    >
                       <i className={`${getFire(match.kd, 2)}`}></i> {match.kd}
                     </td>
-                    <td className={getCellClass(match.kr, 0.76, 0.51)}>
+                    <td
+                      className={`match-kr ${getCellClass(match.kr, 0.76, 0.51)}`}
+                    >
                       <i className={`${getFire(match.kr, 1.2)}`}></i> {match.kr}
                     </td>
-                    <td className={getCellClass(match.hs, 63, 40)}>
+                    <td
+                      className={`match-hs ${getCellClass(match.hs, 63, 40)}`}
+                    >
                       <i className={`${getFire(match.hs, 72)}`}></i> {match.hs}
                     </td>
-                    <td className={getCellClass(match.adr, 75, 60)}>
+                    <td
+                      className={`match-adr ${getCellClass(match.adr, 75, 60)}`}
+                    >
                       <i className={`${getFire(match.adr, 110)}`}></i>{" "}
                       {match.adr}
                     </td>
-                    <td>
+                    <td className="match-elo">
                       {index < matches.length - 1 && match.elo !== 0 ? (
                         getEloChange(match.elo, matches[index + 1].elo)
                       ) : !match.team.includes("team_") ? (

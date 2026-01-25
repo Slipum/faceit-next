@@ -108,7 +108,7 @@ export function Main({ username, setGames, setUserId, comp = 0 }: MainProps) {
           <div
             id="main-c"
             className="main-info"
-            style={{ width: `${comp == 0 ? "80%" : "100%"}` }}
+            style={{ width: `${comp != 0 && "100%"}` }}
           >
             <div
               id="user-back"
@@ -153,7 +153,10 @@ export function Main({ username, setGames, setUserId, comp = 0 }: MainProps) {
                       )}
                     </h1>
                     <div className="elo-container">
-                      <h2>Current ELO: {data.games.cs2.faceit_elo}</h2>
+                      <h2>
+                        <p className="elo-text">Current ELO: </p>
+                        {data.games.cs2.faceit_elo}
+                      </h2>
                       <div className="current-elo">
                         <Image
                           className="iconLevel"
