@@ -97,7 +97,7 @@ export function Header() {
           <Link href="/" style={{ display: "flex", gap: "5px" }}>
             <h1 style={{ padding: "5px 10px" }}>
               <i className="fa-solid fa-chart-simple"></i>{" "}
-              <span>Faceit-Next</span>
+              <span className="text-logo">Faceit-Next</span>
             </h1>
             <Image
               style={{ width: "50px", height: "auto" }}

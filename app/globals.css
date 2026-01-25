@@ -40,6 +40,7 @@ tbody tr td {
   color: #f6f4f4;
   width: 100%;
   position: relative;
+  min-height: 81.2px;
 }
 
 .h-logo {
@@ -72,7 +73,6 @@ tbody tr td {
   left: 50%;
   transform: translateX(-50%);
   border-radius: 10px;
-  overflow: hidden;
 }
 
 .find-container {
@@ -166,6 +166,7 @@ tbody tr td {
 }
 
 .main-info {
+  width: 80%;
   justify-content: center;
   text-align: center;
   margin-top: 20px;
@@ -254,32 +255,30 @@ tbody tr td {
 }
 
 #games {
-  align-items: center;
-  justify-content: center;
-  width: 80%;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  width: 80%;
+  align-items: center;
 }
 
 #games div {
+  gap: 0;
   margin: 0 20px;
   font-size: 2rem;
   background-color: #161616;
   width: 400px;
   padding: 10px;
   border-radius: 0.5rem;
-  text-align: center; /* Центрирование содержимого внутри блока */
+  text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрирование по вертикали */
-  height: 100%;
+  align-items: center;
 }
 
 .game-info h2 {
   padding-bottom: 10px;
-}
-
-.game-info .spaced {
-  justify-content: space-between;
 }
 
 #games div h2 {
@@ -329,6 +328,8 @@ tbody tr td {
 
 #average-kills .elo-container h2 {
   font-size: 1.7rem;
+  display: flex;
+  gap: 1rem;
 }
 
 .username {
@@ -352,6 +353,7 @@ tbody tr td {
 }
 
 .chart-container {
+  position: relative;
   width: 80%;
   height: 400px;
   margin: 0 auto;
@@ -527,14 +529,16 @@ tbody tr td {
 }
 
 #maps-winnings {
-  width: auto;
   display: flex;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
+  width: 80%;
 }
 
 #maps-winnings div {
   text-align: center;
+  flex: 0 0 160px;
 }
 
 .icon-map {
@@ -758,8 +762,8 @@ tbody tr td {
 
 /* Выпадающее меню */
 .dropdown-filter {
-  top: 100%;
-  left: 0;
+  left: 25%;
+  margin-top: 3rem;
   background: #1b1b1b;
   border: 1px solid #ccc;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -1067,4 +1071,64 @@ tbody tr td {
 
 .fa-fire {
   color: #ff9226;
+}
+
+@media screen and (max-width: 1140px) {
+  .text-logo,
+  .h-logo img {
+    display: none;
+  }
+
+  #won-matches {
+    margin-right: 14px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  #won-matches {
+    margin-top: 10rem;
+  }
+
+  .main-info {
+    margin-top: 80px;
+  }
+
+  .main-info,
+  .container,
+  .chart-container,
+  #maps-winnings,
+  #matches {
+    width: 90%;
+    max-width: none;
+    min-width: none;
+  }
+
+  .user-info {
+    display: inline;
+  }
+}
+
+@media screen and (max-width: 655px) {
+  .h-logo,
+  .h-auth {
+    display: none;
+  }
+
+  .main-info,
+  .container,
+  .chart-container,
+  #maps-winnings,
+  #matches {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .search-wrapper {
+    width: 90vw;
+  }
+
+  .search-container button {
+    display: none;
+  }
 }

@@ -39,7 +39,7 @@ export function MapsWin({ arr, winrate, qualityMap }: mapsProps) {
     "de_overpass", // заменили anubis на overpass
     "de_nuke",
     "de_inferno",
-    "de_train",
+    "de_anubis", // вернули anubis
   ];
 
   return (
