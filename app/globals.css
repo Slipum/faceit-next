@@ -456,6 +456,13 @@ tbody tr td {
   color: #f6f4f4;
 }
 
+.fa-clock-rotate-left {
+  position: absolute;
+  left: 0;
+  margin-left: 8%;
+  margin-top: 10px;
+}
+
 .td-tour {
   color: #eca23a;
 }
@@ -762,8 +769,9 @@ tbody tr td {
 
 /* Выпадающее меню */
 .dropdown-filter {
-  left: 25%;
-  margin-top: 3rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 12rem;
   background: #1b1b1b;
   border: 1px solid #ccc;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -1073,6 +1081,23 @@ tbody tr td {
   color: #ff9226;
 }
 
+.adaptive-filter {
+  display: none;
+}
+
+.matches-container {
+  margin-bottom: 400px;
+}
+
+@media screen and (max-width: 1320px) {
+  .match-adr,
+  .match-hs,
+  .match-kr,
+  .match-kd {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 1140px) {
   .text-logo,
   .h-logo img {
@@ -1081,6 +1106,24 @@ tbody tr td {
 
   #won-matches {
     margin-right: 14px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  #matches table thead {
+    display: none;
+  }
+
+  .adaptive-filter {
+    display: block;
+    font-size: 1.5rem;
+    align-items: center;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .filter-button {
+    font-size: 1.25rem;
   }
 }
 
@@ -1105,6 +1148,57 @@ tbody tr td {
 
   .user-info {
     display: inline;
+  }
+
+  .match-id .fa-clock-rotate-left {
+    display: none;
+  }
+
+  .fa-id {
+    color: #ff9226;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  #matches table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  #matches tbody td {
+    border: none;
+    font-size: 1.5rem;
+  }
+
+  #matches .match-map img {
+    width: 130px;
+    height: 65px;
+  }
+
+  .match-kills,
+  .match-deaths,
+  .match-assists {
+    display: none;
+  }
+
+  .result-indicator {
+    font-size: 1.5rem;
+    margin: 8px 16px 8px;
+    padding: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .match-date,
+  .match-id,
+  .match-map,
+  .match-score,
+  .match-elo {
+    margin: auto 0;
+  }
+
+  .match-date p {
+    display: none;
   }
 }
 
