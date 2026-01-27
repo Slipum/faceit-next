@@ -208,6 +208,8 @@ export function ListMaps({
     };
 
     matches.map((match, index) => {
+      const next = matches[index + 1];
+      if (!next) return;
       changeKills += Number(match.kills);
       changeADR += Number(match.adr);
       changeKD += Number(match.kd);
@@ -306,6 +308,8 @@ export function ListMaps({
 
   const day = new Date(matches[0].date).toDateString();
   matches.map((match, index) => {
+    const next = matches[index + 1];
+    if (!next) return;
     if (match.elo > maxElo) {
       maxElo = match.elo;
     }
