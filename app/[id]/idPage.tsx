@@ -197,7 +197,7 @@ export default function IdPage({ params, fromPar }: IdPageProps) {
             pos="left"
           />
         )}
-        <div className="">
+        <div className="match-info">
           <h2 className="team-win">
             Winner is{" "}
             {match.summaryResults.winner == "faction1"

@@ -522,7 +522,13 @@ tbody tr td {
   border-radius: 4px;
   text-align: center;
   font-weight: 800;
-  margin: 2px 4px 2px 0;
+}
+
+.recent .recent-results {
+  display: flex;
+  margin-top: 0.1rem;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
 .icon-map {
@@ -545,7 +551,6 @@ tbody tr td {
 
 #maps-winnings div {
   text-align: center;
-  flex: 0 0 160px;
 }
 
 .icon-map {
@@ -847,6 +852,7 @@ tbody tr td {
 }
 
 .teams {
+  min-width: 300px;
   display: flex;
   justify-content: space-between;
 }
@@ -1038,7 +1044,7 @@ tbody tr td {
 .search-wr {
   position: absolute;
   top: 80px;
-  width: 200px;
+  width: 400px;
   max-width: 400px;
   padding: 10px 20px;
   gap: 10px;
@@ -1089,6 +1095,37 @@ tbody tr td {
   margin-bottom: 400px;
 }
 
+.match-elo-container {
+  display: flex;
+  margin: auto 0;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.match-elo-container div,
+.match-elo-container p {
+  margin: auto 0;
+  justify-content: center;
+  display: flex;
+}
+
+.team-result .team-name {
+  display: none;
+}
+
+@media screen and (max-width: 1500px) {
+  .match-info {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .team-one,
+  .team-two {
+    margin-top: 200px;
+  }
+}
+
 @media screen and (max-width: 1320px) {
   .match-adr,
   .match-hs,
@@ -1124,6 +1161,40 @@ tbody tr td {
 
   .filter-button {
     font-size: 1.25rem;
+  }
+
+  .teams {
+    display: block;
+    width: 100%;
+  }
+
+  .layout-match {
+    display: grid;
+    justify-content: center;
+  }
+
+  .layout-match .fa-reply {
+    left: 5%;
+    top: 1rem;
+  }
+
+  .team-two {
+    margin-top: 0;
+  }
+
+  .match-info {
+    top: 8.33%;
+    width: 100%;
+  }
+
+  .match-info .team-win {
+    margin: 0 auto;
+    width: fit-content;
+  }
+
+  .team-one,
+  .team-two {
+    margin-bottom: 200px;
   }
 }
 
@@ -1162,7 +1233,7 @@ tbody tr td {
 @media screen and (max-width: 760px) {
   #matches table tbody tr {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   }
 
   #matches tbody td {
@@ -1171,8 +1242,8 @@ tbody tr td {
   }
 
   #matches .match-map img {
-    width: 130px;
-    height: 65px;
+    width: 170px;
+    height: 85px;
   }
 
   .match-kills,
@@ -1181,7 +1252,7 @@ tbody tr td {
     display: none;
   }
 
-  .result-indicator {
+  .match-elo-container .result-indicator {
     font-size: 1.5rem;
     margin: 8px 16px 8px;
     padding: 10px;
@@ -1212,8 +1283,28 @@ tbody tr td {
   .container,
   .chart-container,
   #maps-winnings,
-  #matches {
+  #matches,
+  .layout-match {
     width: 100%;
+  }
+
+  .l-container button,
+  .r-container button {
+    font-size: 24px;
+  }
+
+  .search-wr {
+    width: 300px;
+    font-size: 2rem;
+  }
+
+  .search-wr img {
+    width: 72px;
+    height: 72px;
+  }
+
+  .title-all {
+    font-size: 2rem;
   }
 }
 
@@ -1224,5 +1315,60 @@ tbody tr td {
 
   .search-container button {
     display: none;
+  }
+
+  .steam-name {
+    display: none;
+  }
+
+  #games {
+    width: 100%;
+  }
+
+  #games div {
+    width: 100%;
+  }
+
+  .player a {
+    display: inline;
+  }
+
+  .player-ava {
+    width: 100%;
+    height: fit-content;
+    margin: 0 auto;
+  }
+
+  .team-one,
+  .team-two {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .user-info {
+    margin-top: 3rem;
+  }
+
+  .player {
+    padding: 5px 10px;
+  }
+
+  .l-container button {
+    padding-right: 1rem;
+  }
+
+  .r-container button {
+    padding-left: 1rem;
+  }
+
+  .right .team-name,
+  .left .team-name {
+    display: none;
+  }
+
+  .team-result .team-name {
+    font-size: 24px;
+    display: inline-block;
   }
 }

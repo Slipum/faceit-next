@@ -8,11 +8,11 @@ type PlayerProps = {
 
 const PlayerAvatar = ({ avatar, nickname }: PlayerProps) => {
   const [imageError, setImageError] = useState(false);
-
   return (
     <>
       {avatar && !imageError ? (
         <Image
+          className="player-ava"
           src={avatar}
           alt={nickname}
           width={78}
@@ -21,7 +21,13 @@ const PlayerAvatar = ({ avatar, nickname }: PlayerProps) => {
         />
       ) : (
         <div id="avatar">
-          <Image src="/Group1.png" alt="avatar" width={78} height={78} />
+          <Image
+            className="player-ava"
+            src="/Group1.png"
+            alt="avatar"
+            width={78}
+            height={78}
+          />
         </div>
       )}
     </>

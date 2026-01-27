@@ -98,6 +98,8 @@ export function ListMaps({
 
   useClickOutside(dropdownRef, isOpen, () => setIsOpen(false));
 
+  const width = useWindowWidth();
+
   useEffect(() => {
     const fetchMatches = async () => {
       try {
@@ -397,7 +399,7 @@ export function ListMaps({
             <tbody>
               {filteredMatches.map((match, index) => {
                 const count = 100 - index;
-                return (
+                const row = (
                   <tr key={match.date}>
                     <td className="match-id">
                       {day == new Date(match.date).toDateString() ? (
@@ -484,6 +486,16 @@ export function ListMaps({
                     </td>
                   </tr>
                 );
+                return width < 760 ? (
+                  <Link
+                    href={`/${match.matchId}?from=${match.nickname}`}
+                    rel="noopener noreferrer"
+                  >
+                    {row}
+                  </Link>
+                ) : (
+                  row
+                );
               })}
             </tbody>
           </table>
@@ -537,13 +549,10 @@ function getEloChange(currentElo: number, previousElo: number, i?: number) {
       );
     }
     return (
-      <span
-        style={{ display: "inline-flex", gap: "5px" }}
-        className={changeClass}
-      >
-        {currentElo}
+      <div className={`match-elo-container ${changeClass}`}>
+        <div className="match-elo-curr">{currentElo}</div>
         {changeText}
-      </span>
+      </div>
     );
   }
 }
@@ -561,4 +570,18 @@ function getCellClass(
 function getFire(value: number, fire: number) {
   if (value >= fire) return "fa-solid fa-fire";
   return "";
+}
+
+function useWindowWidth() {
+  const [width, setWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 0,
+  );
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return width;
 }

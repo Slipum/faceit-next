@@ -87,6 +87,7 @@ export default function Team({ rounds, team, players, pos }: TeamProps) {
       {rounds &&
         (pos == "right" ? (
           <h1
+            className="team-result"
             style={{
               color: `${
                 Number(rounds[1]) > Number(rounds[0]) ? "#66bb6a" : "#ff4d4f"
@@ -95,10 +96,12 @@ export default function Team({ rounds, team, players, pos }: TeamProps) {
               width: "fit-content",
             }}
           >
+            <h1 className="team-name">{team.name}</h1>
             {rounds[1]}
           </h1>
         ) : (
           <h1
+            className="team-result"
             style={{
               color: `${
                 Number(rounds[0]) > Number(rounds[1]) ? "#66bb6a" : "#ff4d4f"
@@ -108,6 +111,7 @@ export default function Team({ rounds, team, players, pos }: TeamProps) {
             }}
           >
             {rounds[0]}
+            <h1 className="team-name">{team.name}</h1>
           </h1>
         ))}
       <div className={`${pos == "right" ? "left l" : "right r"}-container`}>
@@ -145,7 +149,7 @@ export default function Team({ rounds, team, players, pos }: TeamProps) {
             border: "none",
           }}
         />
-        <h1>{team.name}</h1>
+        <h1 className="team-name">{team.name}</h1>
         {pos == "left" && (
           <>
             <button
@@ -189,6 +193,7 @@ export default function Team({ rounds, team, players, pos }: TeamProps) {
                             src={`https://cdn-frontend.faceit-cdn.net/web/static/media/assets_images_skill-icons_skill_level_${getLVL(
                               player.elo,
                             )}_svg.svg`}
+                            className="lvl-player"
                             alt={getLVL(player.elo)}
                             width={32}
                             height={32}
