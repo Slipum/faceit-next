@@ -400,7 +400,7 @@ export function ListMaps({
               {filteredMatches.map((match, index) => {
                 const count = 100 - index;
                 const row = (
-                  <tr key={match.date}>
+                  <>
                     <td className="match-id">
                       {day == new Date(match.date).toDateString() ? (
                         <>
@@ -484,17 +484,20 @@ export function ListMaps({
                         </>
                       )}
                     </td>
-                  </tr>
+                  </>
                 );
                 return width < 760 ? (
-                  <Link
-                    href={`/${match.matchId}?from=${match.nickname}`}
-                    rel="noopener noreferrer"
-                  >
-                    {row}
-                  </Link>
+                  <tr key={match.date}>
+                    <Link
+                      className="link-to-match"
+                      href={`/${match.matchId}?from=${match.nickname}`}
+                      rel="noopener noreferrer"
+                    >
+                      {row}
+                    </Link>
+                  </tr>
                 ) : (
-                  row
+                  <tr key={match.date}>{row}</tr>
                 );
               })}
             </tbody>
