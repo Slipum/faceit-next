@@ -86,22 +86,24 @@ export function MapsWin({ arr, winrate, qualityMap }: mapsProps) {
                   </p>
                   <span>{mapKey.replace("de_", "").toUpperCase()}</span>
                 </div>
-                <div>
+                <div className="recent">
                   <span style={{ display: "inline-block", width: "100%" }}>
                     Recent results
                   </span>
-                  {arr[mapKey] &&
-                    arr[mapKey].split("").map((char, index) => (
-                      <div
-                        key={`${mapKey}-${index}`}
-                        style={{
-                          backgroundColor: char == "1" ? "green" : "red",
-                        }}
-                        className="result-indicator"
-                      >
-                        {char == "1" ? "W" : "L"}
-                      </div>
-                    ))}
+                  <div className="recent-results">
+                    {arr[mapKey] &&
+                      arr[mapKey].split("").map((char, index) => (
+                        <div
+                          key={`${mapKey}-${index}`}
+                          style={{
+                            backgroundColor: char == "1" ? "green" : "red",
+                          }}
+                          className="result-indicator"
+                        >
+                          {char == "1" ? "W" : "L"}
+                        </div>
+                      ))}
+                  </div>
                 </div>
               </div>
             );

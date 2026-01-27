@@ -1,8 +1,9 @@
 import { getIconMap, headers } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TitleMatches from "./TitleMatches";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 type StatType = {
   title: string;
@@ -80,6 +81,7 @@ export function ListMaps({
   // Фильтрация
   const [selectedMaps, setSelectedMaps] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const handleMapFilterChange = (map: string) => {
     setSelectedMaps((prev) =>
       prev.includes(map) ? prev.filter((m) => m !== map) : [...prev, map],
@@ -93,6 +95,10 @@ export function ListMaps({
   let lastSessionElo: number = 0;
   let wins: number = 0;
   let totalMatchesToday: number = 0;
+
+  useClickOutside(dropdownRef, isOpen, () => setIsOpen(false));
+
+  const width = useWindowWidth();
 
   useEffect(() => {
     const fetchMatches = async () => {
@@ -329,9 +335,10 @@ export function ListMaps({
         totalMatchesToday={totalMatchesToday}
         lastSessionElo={lastSessionElo}
       />
-      <div className="matches-container">
+      <div className="filter-container">
         {isOpen && (
           <div
+            ref={dropdownRef}
             className={`dropdown-filter  ${filteredMatches.length != 0 ? "f-1" : "f-2"}`}
           >
             {[
@@ -355,49 +362,49 @@ export function ListMaps({
             ))}
           </div>
         )}
+        <div className="match-map adaptive-filter">
+          Map
+          <span onClick={() => setIsOpen(!isOpen)} className="filter-button">
+            <i className="fa-solid fa-filter"></i>
+          </span>
+        </div>
+      </div>
+      <div className="matches-container">
         <div id="matches">
           <table>
             <thead>
               <tr>
-                <th>Match</th>
-                <th>Date</th>
-                <th>
+                <th className="match-id">Match</th>
+                <th className="match-date">Date</th>
+                <th className="match-map">
                   Map
                   <span
-                    onClick={() => setIsOpen(!isOpen)}
+                    onClick={() => setIsOpen((prev) => !prev)}
                     className="filter-button"
                   >
                     <i className="fa-solid fa-filter"></i>
                   </span>
                 </th>
-                <th>Score</th>
-                <th>Kills</th>
-                <th>Assists</th>
-                <th>Deaths</th>
-                <th>K/D</th>
-                <th>K/R</th>
-                <th>HS %</th>
-                <th>ADR</th>
-                <th>ELO</th>
+                <th className="match-score">Score</th>
+                <th className="match-kills">Kills</th>
+                <th className="match-assists">Assists</th>
+                <th className="match-deaths">Deaths</th>
+                <th className="match-kd">K/D</th>
+                <th className="match-kr">K/R</th>
+                <th className="match-hs">HS %</th>
+                <th className="match-adr">ADR</th>
+                <th className="match-elo">ELO</th>
               </tr>
             </thead>
             <tbody>
               {filteredMatches.map((match, index) => {
                 const count = 100 - index;
-                return (
+                const row = (
                   <tr key={match.date}>
                     <td className="match-id">
                       {day == new Date(match.date).toDateString() ? (
                         <>
-                          <i
-                            style={{
-                              position: "absolute",
-                              left: "0",
-                              marginLeft: "8%",
-                              marginTop: "10px",
-                            }}
-                            className="fa-solid fa-clock-rotate-left fa-lg td-tour"
-                          ></i>
+                          <i className="fa-solid fa-clock-rotate-left fa-lg td-tour"></i>
                         </>
                       ) : (
                         <></>
@@ -405,6 +412,7 @@ export function ListMaps({
                       <Link
                         href={`/${match.matchId}?from=${match.nickname}`}
                         rel="noopener noreferrer"
+                        className={`${day == new Date(match.date).toDateString() ? "fa-id" : ""}`}
                       >
                         {count}
                         <i
@@ -414,7 +422,11 @@ export function ListMaps({
                       </Link>
                     </td>
                     <td className="match-date">
-                      {new Date(match.date).toLocaleDateString()}
+                      {new Date(match.date).toLocaleDateString("en-EN", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
                       <p>
                         (
                         {new Date(match.date).toLocaleTimeString([], {
@@ -474,6 +486,16 @@ export function ListMaps({
                     </td>
                   </tr>
                 );
+                return width < 760 ? (
+                  <Link
+                    href={`/${match.matchId}?from=${match.nickname}`}
+                    rel="noopener noreferrer"
+                  >
+                    {row}
+                  </Link>
+                ) : (
+                  row
+                );
               })}
             </tbody>
           </table>
@@ -527,13 +549,10 @@ function getEloChange(currentElo: number, previousElo: number, i?: number) {
       );
     }
     return (
-      <span
-        style={{ display: "inline-flex", gap: "5px" }}
-        className={changeClass}
-      >
-        {currentElo}
+      <div className={`match-elo-container ${changeClass}`}>
+        <div className="match-elo-curr">{currentElo}</div>
         {changeText}
-      </span>
+      </div>
     );
   }
 }
@@ -551,4 +570,18 @@ function getCellClass(
 function getFire(value: number, fire: number) {
   if (value >= fire) return "fa-solid fa-fire";
   return "";
+}
+
+function useWindowWidth() {
+  const [width, setWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 0,
+  );
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return width;
 }

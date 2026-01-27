@@ -30,7 +30,7 @@ export function AnotherStat({ games }: AnotherStatProps) {
     <div className="game-info">
       <h2>{title}</h2>
       <div className="spaced">
-        <p>Steam Name: {game.game_player_name}</p>
+        <p className="steam-name">Steam Name: {game.game_player_name}</p>
         <p>Faceit Elo: {game.faceit_elo}</p>
         <p>
           Region:{" "}

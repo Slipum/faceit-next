@@ -456,6 +456,13 @@ tbody tr td {
   color: #f6f4f4;
 }
 
+.fa-clock-rotate-left {
+  position: absolute;
+  left: 0;
+  margin-left: 8%;
+  margin-top: 10px;
+}
+
 .td-tour {
   color: #eca23a;
 }
@@ -515,7 +522,13 @@ tbody tr td {
   border-radius: 4px;
   text-align: center;
   font-weight: 800;
-  margin: 2px 4px 2px 0;
+}
+
+.recent .recent-results {
+  display: flex;
+  margin-top: 0.1rem;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
 .icon-map {
@@ -538,7 +551,6 @@ tbody tr td {
 
 #maps-winnings div {
   text-align: center;
-  flex: 0 0 160px;
 }
 
 .icon-map {
@@ -762,8 +774,9 @@ tbody tr td {
 
 /* Выпадающее меню */
 .dropdown-filter {
-  left: 25%;
-  margin-top: 3rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 12rem;
   background: #1b1b1b;
   border: 1px solid #ccc;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -839,6 +852,7 @@ tbody tr td {
 }
 
 .teams {
+  min-width: 300px;
   display: flex;
   justify-content: space-between;
 }
@@ -1030,7 +1044,7 @@ tbody tr td {
 .search-wr {
   position: absolute;
   top: 80px;
-  width: 200px;
+  width: 400px;
   max-width: 400px;
   padding: 10px 20px;
   gap: 10px;
@@ -1073,6 +1087,54 @@ tbody tr td {
   color: #ff9226;
 }
 
+.adaptive-filter {
+  display: none;
+}
+
+.matches-container {
+  margin-bottom: 400px;
+}
+
+.match-elo-container {
+  display: flex;
+  margin: auto 0;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.match-elo-container div,
+.match-elo-container p {
+  margin: auto 0;
+  justify-content: center;
+  display: flex;
+}
+
+.team-result .team-name {
+  display: none;
+}
+
+@media screen and (max-width: 1500px) {
+  .match-info {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .team-one,
+  .team-two {
+    margin-top: 200px;
+  }
+}
+
+@media screen and (max-width: 1320px) {
+  .match-adr,
+  .match-hs,
+  .match-kr,
+  .match-kd {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 1140px) {
   .text-logo,
   .h-logo img {
@@ -1081,6 +1143,58 @@ tbody tr td {
 
   #won-matches {
     margin-right: 14px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  #matches table thead {
+    display: none;
+  }
+
+  .adaptive-filter {
+    display: block;
+    font-size: 1.5rem;
+    align-items: center;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .filter-button {
+    font-size: 1.25rem;
+  }
+
+  .teams {
+    display: block;
+    width: 100%;
+  }
+
+  .layout-match {
+    display: grid;
+    justify-content: center;
+  }
+
+  .layout-match .fa-reply {
+    left: 5%;
+    top: 1rem;
+  }
+
+  .team-two {
+    margin-top: 0;
+  }
+
+  .match-info {
+    top: 8.33%;
+    width: 100%;
+  }
+
+  .match-info .team-win {
+    margin: 0 auto;
+    width: fit-content;
+  }
+
+  .team-one,
+  .team-two {
+    margin-bottom: 200px;
   }
 }
 
@@ -1106,6 +1220,57 @@ tbody tr td {
   .user-info {
     display: inline;
   }
+
+  .match-id .fa-clock-rotate-left {
+    display: none;
+  }
+
+  .fa-id {
+    color: #ff9226;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  #matches table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  }
+
+  #matches tbody td {
+    border: none;
+    font-size: 1.5rem;
+  }
+
+  #matches .match-map img {
+    width: 170px;
+    height: 85px;
+  }
+
+  .match-kills,
+  .match-deaths,
+  .match-assists {
+    display: none;
+  }
+
+  .match-elo-container .result-indicator {
+    font-size: 1.5rem;
+    margin: 8px 16px 8px;
+    padding: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .match-date,
+  .match-id,
+  .match-map,
+  .match-score,
+  .match-elo {
+    margin: auto 0;
+  }
+
+  .match-date p {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 655px) {
@@ -1118,8 +1283,28 @@ tbody tr td {
   .container,
   .chart-container,
   #maps-winnings,
-  #matches {
+  #matches,
+  .layout-match {
     width: 100%;
+  }
+
+  .l-container button,
+  .r-container button {
+    font-size: 24px;
+  }
+
+  .search-wr {
+    width: 300px;
+    font-size: 2rem;
+  }
+
+  .search-wr img {
+    width: 72px;
+    height: 72px;
+  }
+
+  .title-all {
+    font-size: 2rem;
   }
 }
 
@@ -1130,5 +1315,60 @@ tbody tr td {
 
   .search-container button {
     display: none;
+  }
+
+  .steam-name {
+    display: none;
+  }
+
+  #games {
+    width: 100%;
+  }
+
+  #games div {
+    width: 100%;
+  }
+
+  .player a {
+    display: inline;
+  }
+
+  .player-ava {
+    width: 100%;
+    height: fit-content;
+    margin: 0 auto;
+  }
+
+  .team-one,
+  .team-two {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .user-info {
+    margin-top: 3rem;
+  }
+
+  .player {
+    padding: 5px 10px;
+  }
+
+  .l-container button {
+    padding-right: 1rem;
+  }
+
+  .r-container button {
+    padding-left: 1rem;
+  }
+
+  .right .team-name,
+  .left .team-name {
+    display: none;
+  }
+
+  .team-result .team-name {
+    font-size: 24px;
+    display: inline-block;
   }
 }
